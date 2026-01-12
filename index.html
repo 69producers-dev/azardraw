@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ==========================================
+       SEO OPTIMIZATIONS
+    ========================================== -->
+    <title>AzarDraw - Tirage au Sort Gratuit, Secret Santa & Tournois en Ligne</title>
+    <meta name="description" content="Le meilleur outil de tirage au sort gratuit et sans inscription. Désignez un gagnant (concours Instagram), organisez un Secret Santa ou générez des arbres de tournoi en un clic.">
+    <meta name="keywords" content="tirage au sort, générateur de hasard, secret santa, tournoi, équipes aléatoires, plouf plouf, concours instagram, main innocente, gratuit, sans inscription">
+    <meta name="author" content="AzarDraw">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://azardraw.com/">
+
+    <!-- Open Graph (Facebook / WhatsApp / LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://azardraw.com/">
+    <meta property="og:title" content="AzarDraw - Tirage au Sort, Secret Santa & Tournois Gratuits">
+    <meta property="og:description" content="Réalisez vos tirages au sort en ligne gratuitement. Gagnants, équipes, ordre de passage et Secret Santa. Simple, rapide et impartial.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1605218427306-022ba8c39f05?q=80&w=1200&h=630&auto=format&fit=crop">
+    <meta property="og:site_name" content="AzarDraw">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://azardraw.com/">
+    <meta name="twitter:title" content="AzarDraw - Tirage au Sort & Tournois Gratuits">
+    <meta name="twitter:description" content="Réalisez vos tirages au sort en ligne gratuitement. Gagnants, équipes, ordre de passage et Secret Santa.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1605218427306-022ba8c39f05?q=80&w=1200&h=630&auto=format&fit=crop">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        
+        :root {
+            --bg-color: #0f172a; --text-main: #ffffff; --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.1);
+            --input-bg: rgba(0, 0, 0, 0.3); --card-hover: rgba(255, 255, 255, 0.08);
+            --secondary-bg: rgba(0,0,0,0.2); --overlay-bg: rgba(15, 23, 42, 0.98);
+            --blob-opacity: 0.2; --shadow-color: rgba(0, 0, 0, 0.3); --gradient-title-from: #ffffff;
+        }
+
+        body.light-mode {
+            --bg-color: #f0fdfa; --text-main: #1e293b; --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.75); --glass-border: rgba(255, 255, 255, 1);
+            --input-bg: rgba(255, 255, 255, 0.9); --card-hover: rgba(255, 255, 255, 0.95);
+            --secondary-bg: rgba(241, 245, 249, 0.6); --overlay-bg: rgba(255, 255, 255, 0.98);
+            --blob-opacity: 0.15; --shadow-color: rgba(148, 163, 184, 0.2); --gradient-title-from: #475569;
+        }
+
+        body { font-family: 'Outfit', sans-serif; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; }
+        .bg-gradient-overlay { position: fixed; inset: 0; z-index: -1; background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%); transition: opacity 0.4s; }
+        body.light-mode .bg-gradient-overlay { opacity: 0; }
+        body.light-mode { background-image: radial-gradient(at 0% 0%, #ccfbf1 0, transparent 50%), radial-gradient(at 50% 0%, #fae8ff 0, transparent 50%), radial-gradient(at 100% 0%, #e0e7ff 0, transparent 50%); }
+
+        .glass-panel { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: 0 8px 32px var(--shadow-color); transition: all 0.3s ease; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); transition: transform 0.2s, background 0.2s, box-shadow 0.2s; }
+        body.light-mode .glass-card { background: rgba(255, 255, 255, 0.6); border-color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .glass-card:hover { background: var(--card-hover); transform: translateY(-2px); }
+        
+        .text-muted-custom { color: var(--text-muted); }
+        .gradient-text { background: linear-gradient(to right, #c084fc, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .custom-input { background-color: var(--input-bg); border: 1px solid var(--glass-border); color: var(--text-main); transition: all 0.2s; }
+        body.light-mode .custom-input { border-color: #cbd5e1; box-shadow: inset 0 2px 5px rgba(0,0,0,0.03); }
+        body.light-mode .custom-input:focus { background-color: #ffffff; border-color: #c084fc; }
+
+        .mode-active { background-color: rgba(255, 255, 255, 0.15); border-color: rgba(192, 132, 252, 0.5); color: white; box-shadow: 0 0 15px rgba(192, 132, 252, 0.2); }
+        body.light-mode .mode-active { background-color: #ffffff; border-color: #d8b4fe; color: #9333ea; box-shadow: 0 4px 15px rgba(192, 132, 252, 0.25); }
+        .mode-inactive { background-color: rgba(0, 0, 0, 0.2); border-color: transparent; color: #94a3b8; }
+        body.light-mode .mode-inactive { background-color: rgba(255, 255, 255, 0.5); color: #64748b; border: 1px solid transparent; }
+        body.light-mode .mode-inactive:hover { background-color: #ffffff; border-color: #e2e8f0; color: #475569; }
+
+        .nav-link { position: relative; opacity: 0.7; transition: opacity 0.2s; color: var(--text-main); }
+        .nav-link:hover { opacity: 1; }
+        .nav-link.active { opacity: 1; font-weight: 600; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: linear-gradient(to right, #c084fc, #db2777); border-radius: 2px; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+        .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; transform: translateY(10px); }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        .ad-placeholder { background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03), rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px); border: 1px dashed rgba(255,255,255,0.2); color: var(--text-muted); }
+        body.light-mode .ad-placeholder { background: repeating-linear-gradient(45deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.06) 10px, rgba(0,0,0,0.06) 20px); border-color: rgba(0,0,0,0.2); }
+        
+        #result-overlay { background-color: var(--overlay-bg); color: var(--text-main); }
+        body.light-mode #result-winner-title { color: var(--text-muted); }
+        body.light-mode #winner-name { background-image: linear-gradient(to bottom right, #334155, #7e22ce, #be185d) !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        
+        .santa-spoiler { cursor: pointer; position: relative; overflow: hidden; }
+        .santa-spoiler .hidden-content { filter: blur(8px); opacity: 0.5; transition: all 0.3s; user-select: none; }
+        .santa-spoiler:hover .hidden-content { opacity: 0.8; filter: blur(4px); }
+        .santa-spoiler.revealed .hidden-content { filter: blur(0); opacity: 1; color: #ec4899; font-weight: bold; }
+        .santa-spoiler .reveal-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; font-weight: bold; text-transform: uppercase; background: rgba(0,0,0,0.6); color: white; padding: 2px 6px; border-radius: 4px; pointer-events: none; transition: opacity 0.2s; }
+        .santa-spoiler.revealed .reveal-text { opacity: 0; }
+
+        #cookie-banner { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 600px; z-index: 1000; display: none; flex-direction: column; gap: 15px; padding: 20px; border-radius: 16px; background: var(--overlay-bg); border: 1px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0,0,0,0.3); backdrop-filter: blur(20px); }
+        @media (min-width: 640px) { #cookie-banner { flex-direction: row; align-items: center; justify-content: space-between; } }
+        
+        .bracket-node { border: 2px solid #000; background: #fff; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 20px; color: #1e293b; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 16px; }
+        #result-list { max-height: 50vh; overflow-y: auto; padding-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient-overlay"></div>
+    <nav class="w-full p-6 flex justify-between items-center z-50 max-w-7xl mx-auto">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.reload()">
+            <i class="fa-solid fa-dice text-2xl text-pink-500"></i><span class="text-xl font-bold tracking-tight">AzarDraw</span>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="flex gap-4 md:gap-8 text-xs md:text-base">
+                <button onclick="setView('app')" id="nav-app" class="nav-link active" data-i18n="nav_app">Application</button>
+                <button onclick="setView('blog')" id="nav-blog" class="nav-link" data-i18n="nav_blog">Blog</button>
+            </div>
+            <button onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors border border-white/10 text-sm shadow-sm"><i class="fa-solid fa-sun hidden text-amber-500 text-lg" id="icon-sun"></i><i class="fa-solid fa-moon text-indigo-300 text-lg" id="icon-moon"></i></button>
+        </div>
+    </nav>
+
+    <main class="flex-1 relative w-full max-w-7xl mx-auto p-4 flex flex-col items-center min-h-[80vh]">
+        <div class="fixed top-20 left-10 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl animate-pulse pointer-events-none" style="opacity: var(--blob-opacity)"></div>
+        <div class="fixed bottom-20 right-10 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl animate-pulse pointer-events-none" style="opacity: var(--blob-opacity); animation-delay: 1s;"></div>
+        <div class="w-full max-w-3xl mx-auto mb-6 relative z-10 fade-in"><div class="ad-placeholder w-full h-24 rounded-xl flex flex-col items-center justify-center text-xs uppercase tracking-widest"><span class="mb-1 text-[10px] opacity-50" data-i18n="ad_label">Publicité</span><span data-i18n="ad_space">Espace Bannière (728x90)</span></div></div>
+
+        <section id="view-app" class="w-full max-w-3xl relative z-10 fade-in" style="animation-delay: 0.1s;">
+            <div class="glass-panel md:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-white/10 text-center transition-colors" style="background-color: var(--secondary-bg)">
+                    <h1 class="text-xl font-bold" data-i18n="tool_title">Tirage au Sort</h1>
+                    <p class="text-xs text-muted-custom mt-1" data-i18n="tool_subtitle">Gratuit, sans inscription et impartial</p>
+                </div>
+                <div class="flex flex-col md:flex-row h-full">
+                    <div class="p-6 flex-1 flex flex-col border-b md:border-b-0 md:border-r border-white/10">
+                        <div class="flex justify-between items-end mb-2">
+                            <label class="block text-sm font-medium text-muted-custom" data-i18n="label_participants">Participants</label>
+                            <div class="flex gap-2">
+                                <button onclick="importFile()" class="text-xs bg-white/5 hover:bg-white/10 px-2 py-1 rounded text-muted-custom hover:text-main transition-colors border border-white/10 shadow-sm"><i class="fa-solid fa-file-import mr-1"></i> <span data-i18n="btn_import">Importer</span></button>
+                                <button onclick="clearInput()" class="text-xs hover:text-red-400 text-muted-custom transition-colors px-1" data-i18n="btn_clear">Effacer</button>
+                            </div>
+                        </div>
+                        <div class="relative flex-1 min-h-[500px]">
+                            <textarea id="manual-input" class="w-full h-full custom-input rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none transition-all font-mono leading-loose scroll-hide placeholder-slate-400" data-i18n-placeholder="placeholder_input" placeholder="Entrez un nom par ligne..."></textarea>
+                            <div class="absolute bottom-2 right-3 text-[10px] bg-black/50 px-2 py-1 rounded-full text-white backdrop-blur-sm" id="count-manual">0 participants</div>
+                        </div>
+                    </div>
+                    <div class="p-6 md:w-80 flex flex-col gap-6 transition-colors" style="background-color: var(--secondary-bg)">
+                        <div>
+                            <label class="block text-xs font-bold text-muted-custom uppercase mb-3 flex items-center"><span data-i18n="label_options">Options</span><i class="fa-regular fa-circle-question ml-2 cursor-help"></i></label>
+                            <div class="flex flex-col gap-3">
+                                <button onclick="setMode('winner')" id="mode-winner" class="relative group mode-active p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
+                                    <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-trophy text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_winner">Gagnant</span><span class="text-[10px] opacity-70" data-i18n="desc_winner">Tirage unique</span></div>
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_winner">Désigne un unique vainqueur au hasard.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                </button>
+                                <button onclick="setMode('teams')" id="mode-teams" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
+                                    <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-users text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_teams">Équipes</span><span class="text-[10px] opacity-70" data-i18n="desc_teams">Créer des groupes</span></div>
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_teams">Répartit aléatoirement les participants en groupes.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                </button>
+                                <button onclick="setMode('order')" id="mode-order" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
+                                    <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-arrow-down-1-9 text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_order">Ordre</span><span class="text-[10px] opacity-70" data-i18n="desc_order">Mélanger la liste</span></div>
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_order">Mélange la liste pour définir un ordre de passage.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                </button>
+                                <button onclick="setMode('tournament')" id="mode-tournament" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
+                                    <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-sitemap text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_tournament">Tournoi</span><span class="text-[10px] opacity-70" data-i18n="desc_tournament">Arbre de matchs</span></div>
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_tournament">Génère les matchs du premier tour (bracket).</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                </button>
+                                <button onclick="setMode('santa')" id="mode-santa" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
+                                    <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-gifts text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_santa">Secret Santa</span><span class="text-[10px] opacity-70" data-i18n="desc_santa">Échange de cadeaux</span></div>
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_santa">Assigne un destinataire secret à chaque participant.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                </button>
+                            </div>
+                            <div id="options-teams" class="hidden mt-4 p-4 bg-white/5 rounded-xl border border-white/10 fade-in">
+                                <div class="flex justify-between items-center mb-2"><span class="text-xs text-muted-custom" data-i18n="label_groups">Groupes</span><span id="group-count" class="text-sm font-bold text-pink-500">2</span></div>
+                                <div class="flex items-center gap-2"><button onclick="adjustGroups(-1)" class="flex-1 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-xs font-bold">-</button><button onclick="adjustGroups(1)" class="flex-1 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-xs font-bold">+</button></div>
+                            </div>
+                            <div id="options-tournament" class="hidden mt-4 p-4 bg-white/5 rounded-xl border border-white/10 fade-in">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="tournament-full" class="w-4 h-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500"><span class="text-xs text-muted-custom font-bold" data-i18n="option_full_bracket">Arbre jusqu'à la finale</span></label>
+                            </div>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-white/10">
+                            <button onclick="startDraw()" id="btn-draw" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 font-bold text-lg text-white shadow-lg hover:shadow-purple-500/50 transform hover:scale-[1.02] active:scale-95 transition-all duration-200 flex justify-center items-center group overflow-hidden relative">
+                                <span id="btn-text" class="relative z-10" data-i18n="btn_draw">Tirer au sort</span><i class="fa-solid fa-wand-magic-sparkles ml-2 group-hover:rotate-12 transition-transform relative z-10"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-blog" class="w-full hidden fade-in relative z-10 flex-col" style="animation-delay: 0.1s;">
+            <div class="text-center mb-10"><h1 class="text-4xl md:text-5xl font-extrabold mb-4"><span class="gradient-text" data-i18n="blog_title">Le Blog AzarDraw</span></h1><p class="text-muted-custom max-w-2xl mx-auto" data-i18n="blog_subtitle">Astuces, guides et meilleures pratiques.</p></div>
+            <div id="blog-loading" class="flex justify-center py-20"><div class="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div></div>
+            <div id="blog-posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full pb-20 max-w-5xl mx-auto"></div>
+        </section>
+        
+        <section id="view-admin" class="w-full hidden fade-in relative z-10 max-w-4xl mx-auto mb-20">
+            <div class="glass-panel p-8 rounded-2xl flex flex-col gap-8">
+                <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                    <div><h2 class="text-2xl font-bold">Administration</h2></div>
+                    <div class="flex gap-2">
+                         <button onclick="setView('blog')" class="text-sm text-muted-custom hover:opacity-100 px-3 py-2" data-i18n="btn_close">Fermer</button>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center mb-4"><h3 class="text-sm font-bold uppercase text-muted-custom">Vos Articles</h3></div>
+                        <div id="admin-posts-list" class="space-y-3 max-h-[500px] overflow-y-auto scroll-hide pr-2"><div class="text-center py-10 opacity-50 text-sm">Mode Statique (Admin désactivé)</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="w-full max-w-3xl mx-auto mt-6 relative z-10 fade-in"><div class="ad-placeholder w-full h-24 rounded-xl flex flex-col items-center justify-center text-slate-500 text-xs uppercase tracking-widest"><span class="mb-1 text-[10px] opacity-50" data-i18n="ad_label">Publicité</span><span data-i18n="ad_space">Espace Bannière (728x90)</span></div></div>
+    </main>
+
+    <footer class="text-center p-6 text-muted-custom text-xs z-10 relative border-t border-white/5 mt-auto"><div class="flex justify-center items-center gap-4"><span data-i18n="footer_rights">&copy; 2025 AzarDraw.</span></div></footer>
+
+    <div id="cookie-banner" class="fade-in"><div class="text-sm text-muted-custom flex-1"><p><strong class="text-white">🍪 Soutenez AzarDraw</strong> <br><span data-i18n="cookie_text">Ce site est 100% gratuit. La publicité est notre seul revenu. Acceptez-vous les cookies pour nous soutenir ?</span></p></div><div class="flex gap-3 mt-4 sm:mt-0 items-center"><button onclick="acceptCookies()" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-bold text-xs hover:opacity-90 transition-opacity whitespace-nowrap" data-i18n="cookie_accept">Oui, je soutiens !</button><button onclick="refuseCookies()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors whitespace-nowrap" data-i18n="cookie_refuse">Continuer sans</button></div></div>
+
+    <!-- RESULT OVERLAY -->
+    <div id="result-overlay" class="fixed inset-0 z-[100] flex flex-col hidden opacity-0 transition-opacity duration-300">
+        <button onclick="closeResult()" class="absolute top-4 right-4 opacity-50 hover:opacity-100 p-2 z-50 transition-opacity"><i class="fa-solid fa-xmark text-2xl"></i></button>
+
+        <div id="result-loading" class="flex-1 flex flex-col items-center justify-center hidden">
+            <div class="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <div class="text-xl font-bold animate-pulse gradient-text">Mélange en cours...</div>
+        </div>
+
+        <div id="result-winner" class="flex-1 flex flex-col items-center justify-center hidden p-6 text-center">
+            <div id="result-winner-title" class="text-slate-400 text-sm tracking-[0.2em] uppercase font-bold mb-6 animate-bounce" data-i18n="result_winner_title">Le vainqueur est</div>
+            <div class="relative w-full">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+                <h2 id="winner-name" class="winner-text-gradient relative text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-purple-200 to-pink-200 py-4 break-words leading-tight">...</h2>
+            </div>
+        </div>
+
+        <div id="result-article" class="flex-1 flex flex-col hidden w-full max-w-2xl mx-auto h-full animate-slideUp">
+            <div class="p-6 overflow-y-auto scroll-hide">
+                <div class="text-xs font-bold text-pink-500 mb-2 uppercase tracking-wider" id="article-category">Catégorie</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6" id="article-title">Titre</h2>
+                <div class="prose prose-invert prose-lg max-w-none text-muted-custom leading-relaxed space-y-4" id="article-body"></div>
+            </div>
+        </div>
+
+        <div id="result-list" class="flex-1 flex flex-col hidden overflow-hidden max-w-md mx-auto w-full min-h-[50vh]">
+            <div class="p-6 pb-2 text-center">
+                <h2 class="text-2xl font-bold mb-1" id="list-title">Résultats</h2>
+                <p class="text-xs text-muted-custom">Glissez pour voir tout</p>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 scroll-hide space-y-4" id="list-container"></div>
+        </div>
+
+        <div id="result-share" class="px-6 pb-6 hidden max-w-md mx-auto w-full">
+            <div class="mb-6">
+                <div class="flex items-center justify-center mb-4"><div class="h-px bg-current opacity-20 flex-1"></div><span class="text-[10px] uppercase font-bold text-muted-custom px-3 tracking-widest" data-i18n="share_link">Partager le résultat</span><div class="h-px bg-current opacity-20 flex-1"></div></div>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="shareSocial('whatsapp')" class="w-10 h-10 rounded-full bg-[#25D366] text-white shadow-lg"><i class="fa-brands fa-whatsapp text-xl"></i></button>
+                    <button onclick="shareSocial('facebook')" class="w-10 h-10 rounded-full bg-[#1877F2] text-white shadow-lg"><i class="fa-brands fa-facebook-f"></i></button>
+                    <button onclick="shareSocial('twitter')" class="w-10 h-10 rounded-full bg-black text-white shadow-lg border border-white/20"><i class="fa-brands fa-x-twitter" style="color:#fff!important"></i></button>
+                    <button onclick="shareSocial('reddit')" class="w-10 h-10 rounded-full bg-[#FF4500] text-white shadow-lg"><i class="fa-brands fa-reddit text-xl"></i></button>
+                    <button onclick="shareSocial('linkedin')" class="w-10 h-10 rounded-full bg-[#0077b5] text-white shadow-lg"><i class="fa-brands fa-linkedin-in"></i></button>
+                    <button onclick="shareSocial('email')" class="w-10 h-10 rounded-full bg-slate-600 text-white shadow-lg"><i class="fa-solid fa-envelope"></i></button>
+                    <button onclick="copyResults()" class="w-10 h-10 rounded-full bg-gray-500 text-white shadow-lg"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                <div id="share-toast" class="text-center mt-2 text-xs text-green-400 opacity-0 transition-opacity duration-300 font-bold" data-i18n="toast_copied">Texte copié !</div>
+            </div>
+
+            <div id="image-gen-section" class="hidden">
+                <div class="flex items-center justify-center mb-4"><div class="h-px bg-current opacity-20 flex-1"></div><span class="text-[10px] uppercase font-bold text-muted-custom px-3 tracking-widest text-center" data-i18n="share_image">LE RÉSULTAT EN IMAGE</span><div class="h-px bg-current opacity-20 flex-1"></div></div>
+                <div class="bg-black/20 p-4 rounded-xl mb-4 text-xs space-y-3">
+                    <div class="font-bold text-muted-custom mb-1 text-[10px] uppercase" data-i18n="customization_title">Personnalisation</div>
+                    <div id="custom-inputs-winner">
+                         <input type="text" id="custom-title-input" data-i18n-placeholder="input_contest_name" placeholder="Nom du concours..." class="w-full bg-transparent border-b border-white/10 px-2 py-1 text-white focus:outline-none focus:border-pink-500 transition-colors mb-2">
+                         <input type="text" id="custom-footer-input" data-i18n-placeholder="input_footer_text" placeholder="Texte bas..." class="w-full bg-transparent border-b border-white/10 px-2 py-1 text-white focus:outline-none focus:border-pink-500 transition-colors">
+                    </div>
+                    <div id="custom-inputs-tournament" class="hidden">
+                         <input type="text" id="custom-tournament-name" placeholder="Nom du Tournoi (ex: FIFA 24)" class="w-full bg-transparent border-b border-white/10 px-2 py-1 text-white focus:outline-none focus:border-pink-500 transition-colors">
+                    </div>
+                </div>
+                <div class="flex justify-center gap-4">
+                    <div id="winner-img-btns" class="flex gap-4 w-full justify-center">
+                        <button onclick="generateImage('square')" class="flex-1 py-4 px-2 rounded-xl custom-input hover:brightness-110 hover:shadow-md transition-all group flex flex-col items-center gap-2"><div class="w-8 h-8 border-2 border-current rounded-md flex items-center justify-center text-[10px] font-bold opacity-50 group-hover:opacity-100 transition-opacity bg-current/5">1:1</div><span class="text-xs font-bold" data-i18n="image_square">Post Carré</span></button>
+                        <button onclick="generateImage('story')" class="flex-1 py-4 px-2 rounded-xl custom-input hover:brightness-110 hover:shadow-md transition-all group flex flex-col items-center gap-2"><div class="w-6 h-10 border-2 border-current rounded-md flex items-center justify-center text-[10px] font-bold opacity-50 group-hover:opacity-100 transition-opacity bg-current/5">9:16</div><span class="text-xs font-bold" data-i18n="image_story">Story</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-actions" class="p-6 transition-colors border-t border-white/10 flex gap-3 justify-center hidden max-w-md mx-auto w-full rounded-t-xl md:rounded-xl md:mb-6" style="background-color: var(--secondary-bg)">
+            <button onclick="startDraw()" class="flex-1 py-3 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold" data-i18n="btn_replay">Rejouer</button>
+            <button onclick="closeResult()" class="flex-1 py-3 rounded-lg bg-white text-black font-bold hover:bg-slate-200 transition-colors text-sm shadow-lg" data-i18n="btn_close">Fermer</button>
+        </div>
+    </div>
+    
+    <div id="capture-container" style="position: absolute; top: -10000px; left: -10000px; z-index: -50;">
+        <div id="capture-template" class="relative flex flex-col items-center p-12 text-center" style="width: 1080px; height: 1080px; background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%); overflow: hidden;">
+            <div id="capture-bg-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.2) 0%, transparent 60%);"></div>
+            <div id="capture-confetti-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6;">
+                 <svg width="100%" height="100%" viewBox="0 0 1080 1080"><circle cx="100" cy="100" r="10" fill="#F472B6" /><circle cx="900" cy="200" r="15" fill="#C084FC" /><rect x="50" y="500" width="15" height="15" fill="#60A5FA" transform="rotate(45 50 500)" /></svg>
+            </div>
+            
+            <div class="relative z-10 flex flex-col items-center gap-6 w-full h-full justify-center">
+                <div class="flex items-center justify-center gap-4 text-white w-full" style="opacity: 0.9;" id="capture-logo-container">
+                    <div id="default-branding" class="flex items-center gap-4"><i class="fa-solid fa-dice text-7xl" style="color: #f472b6;"></i><span class="text-6xl font-bold tracking-tight" style="font-family: sans-serif;">AzarDraw</span></div>
+                </div>
+                
+                <div id="capture-content-area" class="flex-1 flex flex-col justify-center items-center w-full">
+                     <div id="capture-winner-content" style="display:block;">
+                        <div id="capture-contest-name" style="min-height: 40px; color: #ffffff; font-size: 48px; font-weight: bold; font-family: sans-serif; text-shadow: 0 4px 20px rgba(0,0,0,0.5);"></div>
+                        <div style="color: #fbcfe8; font-size: 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.4em; font-family: sans-serif; margin-top: 20px;">Le Vainqueur Est</div>
+                        <h1 id="capture-winner" style="margin-top: 30px; font-size: 140px; font-weight: 900; color: #ffffff; text-shadow: 0 0 60px rgba(192, 132, 252, 0.6); font-family: sans-serif; line-height: 1.1;">Name</h1>
+                     </div>
+                </div>
+
+                <div id="capture-decoration-line" style="width: 200px; height: 4px; background: linear-gradient(to right, transparent, #f472b6, transparent); margin-top: 20px;"></div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <div id="capture-footer" style="color: rgba(255,255,255,0.9); font-size: 24px; font-family: sans-serif; font-weight: 500;">votre tirage au sort gratuit, sans inscription et impartial</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 28px; font-family: monospace; font-weight: bold; letter-spacing: 2px;">azardraw.com</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="file-input" accept=".txt,.csv" class="hidden" onchange="handleFileImport(this)">
+
+    <script>
+        const translations = {
+            fr: {
+                nav_app: "Application", nav_blog: "Blog", tool_title: "Tirage au Sort", tool_subtitle: "Gratuit, sans inscription et impartial",
+                label_participants: "Participants", btn_import: "Importer", btn_clear: "Effacer",
+                placeholder_input: "Exemple de liste :\nAlice\nBob\nCharlie\nDavid\nEve",
+                label_options: "Options", mode_winner: "Gagnant", desc_winner: "Tirage unique",
+                mode_teams: "Équipes", desc_teams: "Créer des groupes", mode_order: "Ordre", desc_order: "Mélanger la liste",
+                mode_tournament: "Tournoi", desc_tournament: "Arbre de matchs", mode_santa: "Secret Santa", desc_santa: "Échange de cadeaux",
+                label_groups: "Groupes", btn_draw: "Tirer au sort", btn_replay: "Rejouer", btn_close: "Fermer",
+                share_link: "Partager le résultat", share_image: "LE RÉSULTAT EN IMAGE", toast_copied: "Texte copié !",
+                image_square: "Post Carré", image_story: "Story", customization_title: "Personnalisation",
+                input_contest_name: "Nom du concours (ex: Concours de Noël)", input_footer_text: "Texte bas (ex: Merci à tous !)",
+                result_winner_title: "Le vainqueur est", blog_title: "Le Blog AzarDraw", blog_subtitle: "Astuces, guides et meilleures pratiques.",
+                footer_rights: "© 2025 AzarDraw.", admin_btn: "Admin", ad_label: "Publicité", ad_space: "Espace Bannière (728x90)",
+                result_teams_title: "Équipes Formées", result_order_title: "Ordre de Passage",
+                result_tournament_title: "Matchs du Tournoi", result_santa_title: "Secret Santa 🎅",
+                tooltip_winner: "Désigne un unique vainqueur au hasard.", tooltip_teams: "Répartit aléatoirement les participants en groupes.",
+                tooltip_order: "Mélange la liste pour définir un ordre de passage.", tooltip_tournament: "Génère les matchs du premier tour (bracket).",
+                tooltip_santa: "Assigne un destinataire secret à chaque participant.",
+                cookie_text: "Ce site est 100% gratuit. La publicité est notre seul revenu pour payer les serveurs. Acceptez-vous les cookies publicitaires pour nous aider à maintenir l'outil en ligne ?",
+                cookie_accept: "Oui, je soutiens !", cookie_refuse: "Continuer sans",
+                option_full_bracket: "Arbre jusqu'à la finale", final: "Finale", semi_finals: "Demi-Finales", round_x: "Tour", round_1: "1er Tour"
+            },
+            en: {
+                nav_app: "App", nav_blog: "Blog", tool_title: "Random Picker", tool_subtitle: "Free, no signup, fair",
+                label_participants: "Participants", btn_import: "Import", btn_clear: "Clear",
+                placeholder_input: "List example:\nAlice\nBob\nCharlie\nDavid\nEve",
+                label_options: "Options", mode_winner: "Winner", desc_winner: "Single draw",
+                mode_teams: "Teams", desc_teams: "Create groups", mode_order: "Order", desc_order: "Shuffle list",
+                mode_tournament: "Tournament", desc_tournament: "Match bracket", mode_santa: "Secret Santa", desc_santa: "Gift exchange",
+                label_groups: "Groups", btn_draw: "Draw", btn_replay: "Replay", btn_close: "Close",
+                share_link: "Share Result", share_image: "RESULT IMAGE", toast_copied: "Text copied!",
+                image_square: "Square Post", image_story: "Story", customization_title: "Customization",
+                input_contest_name: "Contest Name (e.g. Xmas Giveaway)", input_footer_text: "Footer Text (e.g. Thanks all!)",
+                result_winner_title: "The winner is", blog_title: "AzarDraw Blog", blog_subtitle: "Tips, guides and best practices.",
+                footer_rights: "© 2025 AzarDraw.", admin_btn: "Admin", ad_label: "Advertisement", ad_space: "Banner Space (728x90)",
+                result_teams_title: "Teams Created", result_order_title: "Running Order",
+                result_tournament_title: "Tournament Matches", result_santa_title: "Secret Santa 🎅",
+                tooltip_winner: "Picks a single winner at random.", tooltip_teams: "Randomly splits participants into groups.",
+                tooltip_order: "Shuffles the list to define a running order.", tooltip_tournament: "Generates first round matches (bracket).",
+                tooltip_santa: "Assigns a secret recipient to each participant.",
+                cookie_text: "This site is 100% free. Advertising pays for our servers. Do you accept ad cookies to help us keep this tool online?",
+                cookie_accept: "Yes, I support!", cookie_refuse: "Continue without",
+                option_full_bracket: "Full bracket to final", final: "Final", semi_finals: "Semi-Finals", round_x: "Round", round_1: "Round 1"
+            }
+        };
+
+        let currentLang = 'fr';
+        function detectAndApplyLanguage() {
+            const userLang = navigator.language || navigator.userLanguage;
+            currentLang = userLang.startsWith('fr') ? 'fr' : 'en';
+            applyTranslations();
+        }
+        function applyTranslations() {
+            const texts = translations[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (texts[key]) el.innerText = texts[key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (texts[key]) el.placeholder = texts[key];
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            detectAndApplyLanguage();
+            renderBlog();
+            checkCookies();
+        });
+
+        const blogData = {
+            fr: [
+                {
+                    title: "Comment faire un tirage au sort gratuit et sans inscription ?",
+                    category: "Guide Pratique",
+                    icon: "fa-solid fa-check-circle",
+                    summary: "Découvrez AzarDraw, l'outil le plus simple pour organiser vos concours. Pas de compte, pas de frais, résultat immédiat.",
+                    content: `<p class="mb-4">Organiser un tirage au sort devrait être simple. Avec AzarDraw, vous copiez votre liste, vous cliquez, et c'est gagné. Idéal pour les enseignants, les managers ou les créateurs de contenu qui veulent aller vite.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Pourquoi utiliser un générateur de hasard en ligne ?</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Impartialité totale :</strong> Contrairement à un humain, l'algorithme ne favorise personne. C'est mathématique.</li><li><strong>Transparence :</strong> Vous pouvez filmer votre écran pour prouver à votre communauté que le résultat est authentique.</li><li><strong>Rapidité :</strong> Copiez votre liste Excel ou texte, collez-la, et obtenez le résultat en moins de 3 secondes.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">3 Cas d'usage fréquents</h3><ol class="list-decimal pl-5 space-y-2 mb-4"><li><strong>Pour les Professeurs :</strong> Désignez un élève au hasard pour passer au tableau sans être accusé de favoritisme.</li><li><strong>Pour les Managers :</strong> Attribuez les tâches ingrates ou les astreintes de manière ludique et équitable.</li><li><strong>Pour les Créateurs (Instagram/TikTok) :</strong> Sélectionnez un gagnant parmi vos commentaires exportés pour vos jeux concours.</li></ol>`
+                },
+                {
+                    title: "Organiser un Secret Santa en ligne : Le Guide Complet",
+                    category: "Idées & Inspiration",
+                    icon: "fa-solid fa-gifts",
+                    summary: "Fini les petits papiers perdus ! Utilisez notre mode Secret Santa pour attribuer les cadeaux à distance.",
+                    content: `<p class="mb-4">Le <strong>Secret Santa</strong> (ou Père Noël Secret) est devenu la tradition incontournable des fêtes de fin d'année, que ce soit en entreprise, entre amis ou en famille. Mais l'organisation logistique peut vite devenir un cauchemar : "Qui a tiré qui ?", "Mince, Paul s'est tiré lui-même !", "On a perdu les papiers...".</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Comment fonctionne notre algorithme ?</h3><p class="mb-4">AzarDraw utilise un algorithme de "cycle fermé" (Hamiltonian path simplifié) pour garantir que :</p><ul class="list-disc pl-5 space-y-2 mb-4"><li>Personne ne se tire au sort soi-même (impossible mathématiquement).</li><li>Il n'y a pas de sous-groupes isolés (A offre à B, et B offre à A). Au contraire, nous créons une grande chaîne : A ➔ B ➔ C ➔ D ➔ A.</li><li>Tout le monde reçoit exactement un cadeau.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">Les règles d'or pour un échange réussi</h3><div class="bg-white/5 p-4 rounded-lg mb-4"><p><strong>1. Fixez un budget :</strong> Mettez-vous d'accord sur un montant max (ex: 10€ ou 20€) pour que personne ne se sente lésé.</p><p class="mt-2"><strong>2. Le Thème :</strong> Imposez un thème (ex: "Kitsch", "Fait main", "Gourmand") pour stimuler la créativité.</p><p class="mt-2"><strong>3. La Révélation :</strong> Utilisez notre mode "Secret Santa" sur un seul téléphone/ordinateur que vous faites passer de main en main. Chaque personne clique sur son nom pour voir sa cible secrètement !</p></div>`
+                },
+                {
+                    title: "Générateur de Tournoi : Créez vos arbres de matchs facilement",
+                    category: "Outils & Tech",
+                    icon: "fa-solid fa-sitemap",
+                    summary: "FIFA, Ping-Pong ou E-sport ? Générez instantanément les paires pour vos brackets de tournoi.",
+                    content: `<p class="mb-4">Organiser un tournoi improvisé se termine souvent avec des feuilles volantes raturées et des débats interminables sur qui affronte qui. Que vous organisiez une soirée <strong>FIFA</strong>, un tournoi de <strong>Ping-Pong</strong> au bureau, ou une compétition de <strong>Beer Pong</strong>, la structure est la clé.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Comment gérer les nombres impairs ?</h3><p class="mb-4">C'est le casse-tête classique : vous êtes 7 joueurs. Comment faire un tableau ?</p><p class="mb-4">Notre algorithme gère automatiquement les <strong>"Byes"</strong> (qualifications d'office). Si le nombre de participants est impair, le système tire au sort un joueur chanceux qui passera directement au tour suivant sans jouer, tandis que les autres s'affronteront. C'est la méthode officielle utilisée dans les compétitions sportives.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Exemple de structure générée</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Match 1 :</strong> Joueur A <span class="text-pink-400 font-bold">VS</span> Joueur B</li><li><strong>Match 2 :</strong> Joueur C <span class="text-pink-400 font-bold">VS</span> Joueur D</li><li><strong>Qualifié d'office :</strong> Joueur E (attend le vainqueur du match 1)</li></ul><p>Utilisez le mode <strong>"Tournoi"</strong> de AzarDraw pour générer ces appariements en une seconde et lancer la compétition !</p>`
+                },
+                {
+                    title: "Plouf Plouf en ligne : L'outil pour désigner un volontaire",
+                    category: "Idées & Inspiration",
+                    icon: "fa-solid fa-hand-point-up",
+                    summary: "Qui fait la vaisselle ? Qui commence la présentation ? Laissez le hasard décider sans disputes.",
+                    content: `<p class="mb-4">Le "Plouf Plouf" numérique, ou la "Courte Paille 2.0", est l'outil indispensable pour la vie en communauté, au bureau ou en colocation. Parfois, il faut prendre une décision arbitraire, et personne ne veut prendre la responsabilité de choisir.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Quand utiliser le tirage au sort unique ?</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-purple-300">Au Travail 💼</h4><p class="text-sm opacity-80">Qui présente le PowerPoint ? Qui va chercher les cafés ? Qui reste tard ce soir ?</p></div><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-pink-300">À la Maison 🏠</h4><p class="text-sm opacity-80">Qui sort les poubelles ? Qui choisit le film ce soir ? Qui conduit au retour de soirée ?</p></div></div><p class="mb-4">L'avantage de passer par <strong>AzarDraw</strong> plutôt qu'un "Pierre-Feuille-Ciseaux", c'est l'indiscutabilité du résultat. C'est affiché à l'écran, c'est certifié par l'algorithme, pas de triche possible. Utilisez le mode <strong>"Gagnant"</strong> pour ces situations.</p>`
+                },
+                {
+                    title: "Comment tirer au sort des équipes équilibrées ?",
+                    category: "Guide Pratique",
+                    icon: "fa-solid fa-users",
+                    summary: "Répartissez votre classe ou vos collègues en groupes aléatoires en quelques secondes.",
+                    content: `<p class="mb-4">La constitution d'équipes est souvent un moment délicat. Laisser les participants choisir eux-mêmes mène souvent à des déséquilibres (les forts ensemble, les amis ensemble) et à l'exclusion de certains. Le tirage au sort est la méthode la plus pédagogique et juste.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Idéal pour le Team Building et l'Éducation</h3><p class="mb-4">Notre générateur d'équipes aléatoires est particulièrement prisé pour :</p><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Les Professeurs d'EPS ou de langues :</strong> Pour créer des binômes ou trinômes de travail hétérogènes.</li><li><strong>Les Hackathons :</strong> Pour mélanger les compétences (devs, designers, marketing) de manière aléatoire.</li><li><strong>Les Jeux de Société :</strong> Pour définir les équipes au Time's Up ou au Pictionnary sans que les couples se mettent systématiquement ensemble.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">Comment ça marche ?</h3><p>Entrez simplement la liste complète des participants (ex: 20 noms). Choisissez le <strong>nombre de groupes</strong> souhaité (ex: 4 groupes). L'algorithme va répartir mathématiquement les personnes pour que les groupes soient de taille égale (ou à +1 près). Fini les calculs mentaux compliqués !</p>`
+                },
+                {
+                    title: "Influenceurs : Le Guide Ultime pour vos Concours Instagram & TikTok",
+                    category: "Guide Pratique",
+                    icon: "fa-solid fa-star",
+                    summary: "Vous voulez faire grossir votre communauté sans risquer le shadowban ? Voici les règles d'or pour organiser un concours légal et viral.",
+                    content: `<p class="mb-4">Les concours sont le levier de croissance #1 pour les créateurs de contenu. Mais attention, Instagram et TikTok ont des règles strictes. Un concours mal géré peut entraîner la suppression de votre compte.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">1. La Transparence est votre assurance-vie</h3><p class="mb-4">Ne faites jamais un tirage au sort "en scred". Utilisez un outil tiers comme <strong>AzarDraw</strong> et filmez votre écran au moment du tirage. Postez cette vidéo en story. Cela prouve votre honnêteté et rassure votre communauté.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">2. Les Mentions Légales Obligatoires</h3><p class="mb-4">Dans la description de votre post, vous DEVEZ inclure :</p><ul class="list-disc pl-5 space-y-2 mb-4"><li>"Ce concours n'est ni géré ni sponsorisé par Instagram/TikTok."</li><li>La date et l'heure précise de fin.</li><li>Les restrictions géographiques (ex: France Métropolitaine uniquement).</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">3. La Mécanique Gagnante</h3><p>Évitez les mécaniques trop complexes. Le combo parfait : <strong>Like + Tag 2 amis + Abonnement</strong>. Demander un partage en story est efficace mais difficile à vérifier (les comptes privés ne s'afficheront pas).</p>`
+                },
+                {
+                    title: "Top 10 des gages drôles pour les perdants",
+                    category: "Idées & Inspiration",
+                    icon: "fa-solid fa-masks-theater",
+                    summary: "Pimentez vos soirées ! Le tirage au sort ne sert pas qu'à désigner un gagnant, il peut aussi désigner la victime d'un gage hilarant.",
+                    content: `<p class="mb-4">Vous utilisez le mode "Gagnant" de AzarDraw pour désigner qui va faire la vaisselle ? C'est utile, mais on peut faire plus drôle. Voici une liste de gages pour vos soirées entre amis :</p><ol class="list-decimal pl-5 space-y-2 mb-4"><li>Parler sans utiliser la lettre "E" pendant 10 minutes.</li><li>Faire le service des boissons toute la soirée avec un accent québécois.</li><li>Liker les 5 premières photos du compte Instagram de son ex (Oups !).</li><li>Faire un discours de 2 minutes sur la reproduction des escargots.</li><li>Danse de la victoire obligatoire, même si on a perdu.</li></ol>`
+                },
+                {
+                    title: "Professeurs : Dynamisez vos cours grâce au hasard",
+                    category: "Guide Pratique",
+                    icon: "fa-solid fa-graduation-cap",
+                    summary: "Comment utiliser AzarDraw en classe pour former des groupes de travail, interroger des élèves ou attribuer des exposés sans conflits.",
+                    content: `<p class="mb-4">En tant qu'enseignant, la gestion de classe est un défi quotidien. Les élèves se plaignent du favoritisme ou refusent de travailler avec certains camarades. Le hasard est votre meilleur allié pédagogique.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">L'Interrogation Orale</h3><p class="mb-4">Projeter AzarDraw au tableau et lancer le tirage au sort du "volontaire désigné" crée un moment de suspense ludique qui dédramatise l'évaluation. L'élève accepte mieux d'être interrogé si c'est "la faute de l'ordi".</p><h3 class="text-xl font-bold text-white mt-6 mb-3">La Mixité Sociale</h3><p>Utilisez le mode <strong>"Équipes"</strong> pour briser les clans. En mélangeant les niveaux et les affinités, vous favorisez l'entraide et apprenez aux élèves à travailler avec tout le monde, une compétence clé pour leur avenir.</p>`
+                },
+                {
+                    title: "C'est quoi le RNG ? Comprendre l'algorithme",
+                    category: "Outils & Tech",
+                    icon: "fa-solid fa-code",
+                    summary: "AzarDraw utilise un générateur de nombres pseudo-aléatoires (PRNG). Plongée technique (mais simple) dans le cœur de la machine.",
+                    content: `<p class="mb-4">RNG signifie <strong>Random Number Generator</strong>. C'est le moteur sous le capot de AzarDraw. Mais saviez-vous qu'un ordinateur est incapable de vrai hasard ?</p><p class="mb-4">Un ordinateur est purement logique (1+1=2). Pour simuler le hasard, il utilise une "graine" (seed), souvent basée sur l'heure exacte à la milliseconde près, et lui applique des opérations mathématiques complexes et chaotiques.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Pourquoi AzarDraw est fiable ?</h3><p>Nous utilisons l'API standard \`Math.random()\` des navigateurs modernes, qui est aujourd'hui cryptographiquement sécurisée pour des applications ludiques. Cela garantit que ni nous, ni vous ne pouvez prédire le résultat avant de cliquer sur le bouton.</p>`
+                },
+                {
+                    title: "Organiser un Secret Santa de dernière minute",
+                    category: "Idées & Inspiration",
+                    icon: "fa-solid fa-sleigh",
+                    summary: "On est le 20 décembre et rien n'est prêt ? Pas de panique. Voici comment sauver Noël en 5 minutes chrono.",
+                    content: `<p class="mb-4">Le Secret Santa est génial, mais l'organisation logistique (les petits papiers, les absents...) est lourde. AzarDraw digitalise tout ça.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Le protocole d'urgence</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Étape 1 :</strong> Créez un groupe WhatsApp "Noël".</li><li><strong>Étape 2 :</strong> Récupérez la liste des présents.</li><li><strong>Étape 3 :</strong> Entrez les prénoms dans AzarDraw, mode <strong>"Secret Santa"</strong>.</li><li><strong>Étape 4 (Cruciale) :</strong> Si vous êtes à distance, faites le tirage en partage d'écran MAIS demandez à tout le monde de fermer les yeux ou de quitter la pièce à tour de rôle (compliqué).</li><li><strong>La meilleure solution :</strong> Si vous êtes ensemble, passez le téléphone. Si vous êtes à distance, le mieux est qu'une personne "Neutre" (qui ne participe pas) fasse le tirage et envoie les résultats par message privé à chacun !</li></ul>`
+                }
+            ],
+            en: [
+                {
+                    title: "How to do a free random draw without registration?",
+                    category: "Practical Guide",
+                    icon: "fa-solid fa-check-circle",
+                    summary: "Discover AzarDraw, the simplest tool to organize your contests. No account, no fees, immediate results.",
+                    content: `<p class="mb-4">Organizing a random draw should be simple. With AzarDraw, copy your list, click, and it's won. Ideal for teachers, managers, or content creators who want to go fast.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Why use an online random generator?</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Total impartiality:</strong> Unlike a human, the algorithm favors no one. It's mathematical.</li><li><strong>Transparency:</strong> You can record your screen to prove to your community that the result is authentic.</li><li><strong>Speed:</strong> Copy your Excel or text list, paste it, and get the result in less than 3 seconds.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">3 Frequent Use Cases</h3><ol class="list-decimal pl-5 space-y-2 mb-4"><li><strong>For Teachers:</strong> Pick a student at random to go to the board without being accused of favoritism.</li><li><strong>For Managers:</strong> Assign ungrateful tasks or on-call duties in a fun and fair way.</li><li><strong>For Creators (Instagram/TikTok):</strong> Select a winner among your exported comments for your contests.</li></ol>`
+                },
+                {
+                    title: "Organizing an Online Secret Santa: The Complete Guide",
+                    category: "Ideas & Inspiration",
+                    icon: "fa-solid fa-gifts",
+                    summary: "No more lost little papers! Use our Secret Santa mode to assign gifts remotely.",
+                    content: `<p class="mb-4"><strong>Secret Santa</strong> has become the essential tradition of end-of-year celebrations. But logistical organization can quickly become a nightmare.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How does our algorithm work?</h3><p class="mb-4">AzarDraw uses a simplified "closed cycle" algorithm to ensure that:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li>No one draws themselves (mathematically impossible).</li><li>There are no isolated subgroups (A gives to B, and B gives to A). Instead, we create a large chain: A ➔ B ➔ C ➔ D ➔ A.</li><li>Everyone receives exactly one gift.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">Golden rules for a successful exchange</h3><div class="bg-white/5 p-4 rounded-lg mb-4"><p><strong>1. Set a budget:</strong> Agree on a max amount so no one feels cheated.</p><p class="mt-2"><strong>2. The Theme:</strong> Impose a theme to stimulate creativity.</p><p class="mt-2"><strong>3. The Reveal:</strong> Use our "Secret Santa" mode on a single phone passed from hand to hand.</p></div>`
+                },
+                {
+                    title: "Tournament Generator: Create your brackets easily",
+                    category: "Tools & Tech",
+                    icon: "fa-solid fa-sitemap",
+                    summary: "FIFA, Ping-Pong or E-sport? Instantly generate pairs for your tournament brackets.",
+                    content: `<p class="mb-4">Organizing an impromptu tournament often ends with scribbled papers. Whether you're organizing a <strong>FIFA</strong> night or an office <strong>Ping-Pong</strong> tournament, structure is key.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How to handle odd numbers?</h3><p class="mb-4">Our algorithm automatically manages <strong>"Byes"</strong> (automatic qualifications). If the number of participants is odd, the system draws a lucky player who will go directly to the next round without playing.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Example of generated structure</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Match 1:</strong> Player A <span class="text-pink-400 font-bold">VS</span> Player B</li><li><strong>Match 2:</strong> Player C <span class="text-pink-400 font-bold">VS</span> Player D</li><li><strong>Qualified:</strong> Player E (awaits winner of match 1)</li></ul><p>Use AzarDraw's <strong>"Tournament"</strong> mode to generate these pairings in a second!</p>`
+                },
+                {
+                    title: "Online Random Picker: The tool to pick a volunteer",
+                    category: "Ideas & Inspiration",
+                    icon: "fa-solid fa-hand-point-up",
+                    summary: "Who does the dishes? Who starts the presentation? Let chance decide without arguments.",
+                    content: `<p class="mb-4">The digital "Eeny Meeny Miny Moe" is the essential tool for community life. Sometimes you have to make an arbitrary decision.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">When to use the single draw?</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-purple-300">At Work 💼</h4><p class="text-sm opacity-80">Who presents the PowerPoint? Who gets the coffee?</p></div><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-pink-300">At Home 🏠</h4><p class="text-sm opacity-80">Who takes out the trash? Who chooses the movie tonight?</p></div></div><p class="mb-4">The advantage of using <strong>AzarDraw</strong> is the indisputability of the result.</p>`
+                },
+                {
+                    title: "How to draw balanced teams?",
+                    category: "Practical Guide",
+                    icon: "fa-solid fa-users",
+                    summary: "Split your class or colleagues into random groups in seconds.",
+                    content: `<p class="mb-4">Building teams is often a delicate moment. Letting participants choose themselves often leads to imbalances.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Ideal for Team Building and Education</h3><p class="mb-4">Our random team generator is particularly popular for:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Teachers:</strong> To create heterogeneous work pairs.</li><li><strong>Hackathons:</strong> To mix skills randomly.</li><li><strong>Board Games:</strong> To define teams without couples always being together.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">How does it work?</h3><p>Simply enter the complete list of participants. Choose the desired <strong>number of groups</strong>. The algorithm will mathematically distribute people so that groups are of equal size.</p>`
+                },
+                {
+                    title: "Influencers: The Ultimate Guide for your Contests",
+                    category: "Practical Guide",
+                    icon: "fa-solid fa-star",
+                    summary: "Want to grow your community without risking a shadowban? Here are the golden rules.",
+                    content: `<p class="mb-4">Contests are the #1 growth lever. But be careful, platforms have strict rules.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">1. Transparency</h3><p class="mb-4">Never do a draw "in secret". Use a third-party tool like <strong>AzarDraw</strong> and record your screen.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">2. Mandatory Legal Mentions</h3><p class="mb-4">You MUST include: "This contest is not managed or sponsored by the platform."</p><h3 class="text-xl font-bold text-white mt-6 mb-3">3. The Winning Mechanic</h3><p>Avoid overly complex mechanics. The perfect combo: <strong>Like + Tag 2 friends + Follow</strong>.</p>`
+                },
+                {
+                    title: "Top 10 funny dares for losers",
+                    category: "Ideas & Inspiration",
+                    icon: "fa-solid fa-masks-theater",
+                    summary: "Spice up your parties! The draw can also designate the victim of a hilarious dare.",
+                    content: `<p class="mb-4">You use AzarDraw's "Winner" mode to designate who does the dishes? Useful, but we can do funnier.</p><ol class="list-decimal pl-5 space-y-2 mb-4"><li>Speak without using the letter "E".</li><li>Serve drinks with an accent.</li><li>Like the first 5 photos of an ex's account.</li><li>Give a 2-minute speech on snail reproduction.</li><li>Mandatory victory dance, even if lost.</li></ol>`
+                },
+                {
+                    title: "Teachers: Energize your classes with randomness",
+                    category: "Practical Guide",
+                    icon: "fa-solid fa-graduation-cap",
+                    summary: "How to use AzarDraw in class to form work groups or question students.",
+                    content: `<p class="mb-4">Classroom management is a daily challenge. Randomness is your best pedagogical ally.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Oral Questioning</h3><p class="mb-4">Projecting AzarDraw creates a playful moment of suspense that de-dramatizes evaluation.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Social Mixing</h3><p>Use the <strong>"Teams"</strong> mode to break up cliques. By mixing levels and affinities, you encourage mutual aid.</p>`
+                },
+                {
+                    title: "What is RNG? Understanding the algorithm",
+                    category: "Tools & Tech",
+                    icon: "fa-solid fa-code",
+                    summary: "AzarDraw uses a Pseudo-Random Number Generator (PRNG).",
+                    content: `<p class="mb-4">RNG stands for <strong>Random Number Generator</strong>. But did you know a computer is incapable of true randomness?</p><p class="mb-4">A computer uses a "seed" and applies complex math operations.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Why is AzarDraw reliable?</h3><p>We use the standard \`Math.random()\` API of modern browsers, which is cryptographically secure for gaming applications.</p>`
+                },
+                {
+                    title: "Organizing a last-minute Secret Santa",
+                    category: "Ideas & Inspiration",
+                    icon: "fa-solid fa-sleigh",
+                    summary: "It's December 20th and nothing is ready? Don't panic.",
+                    content: `<p class="mb-4">Secret Santa is great, but logistics are heavy. AzarDraw digitalizes it all.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">The Emergency Protocol</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Step 1:</strong> Create a WhatsApp group.</li><li><strong>Step 2:</strong> Get the list.</li><li><strong>Step 3:</strong> Enter names in AzarDraw, <strong>"Secret Santa"</strong> mode.</li><li><strong>Step 4:</strong> If remote, a neutral person does the draw and sends results via DM!</li></ul>`
+                }
+            ]
+        };
+
+        function renderBlog() {
+            const container = document.getElementById('blog-posts-container');
+            const loading = document.getElementById('blog-loading');
+            
+            if (container) {
+                container.innerHTML = '';
+                const articles = blogData[currentLang] || blogData['fr']; // Fallback to FR
+                
+                articles.forEach(post => {
+                    const card = document.createElement('article');
+                    card.className = "glass-card rounded-2xl p-6 md:p-8 flex flex-col h-full fade-in";
+                    const colorClass = post.category.includes("Guide") ? 'text-pink-500' : 'text-purple-500';
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-3"><div class="text-xs font-bold ${colorClass} uppercase tracking-wider">${post.category}</div><i class="${post.icon} opacity-60 text-sm"></i></div>
+                        <h2 class="text-2xl font-bold mb-3">${post.title}</h2>
+                        <p class="text-muted-custom text-sm leading-relaxed mb-6 flex-1">${post.summary}</p>
+                        <button class="read-more-btn font-semibold text-sm hover:text-pink-400 transition-colors inline-flex items-center text-left">Lire l'article <i class="fa-solid fa-arrow-right ml-2 text-xs"></i></button>
+                    `;
+                    card.querySelector('.read-more-btn').addEventListener('click', () => openArticle(post.category, post.title, post.content));
+                    container.appendChild(card);
+                });
+            }
+            if (loading) loading.classList.add('hidden');
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTick() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        }
+        function playWin() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            const now = audioCtx.currentTime;
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0, now + i*0.1);
+                gain.gain.linearRampToValueAtTime(0.2, now + i*0.1 + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + i*0.1 + 1.5);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + i*0.1);
+                osc.stop(now + i*0.1 + 1.5);
+            });
+        }
+        function playSanta() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const now = audioCtx.currentTime;
+            const notes = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02];
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                const time = now + (i * 0.08); 
+                gain.gain.setValueAtTime(0, time);
+                gain.gain.linearRampToValueAtTime(0.15, time + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 1.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + 1.5);
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.getElementById('icon-sun').classList.toggle('hidden', !isLight);
+            document.getElementById('icon-moon').classList.toggle('hidden', isLight);
+        }
+
+        let state = { mode: 'winner', groups: 2, isDrawing: false, tournamentData: null };
+        const DOM = {
+            manualInput: document.getElementById('manual-input'),
+            manualCount: document.getElementById('count-manual'),
+            resultOverlay: document.getElementById('result-overlay'),
+            winnerName: document.getElementById('winner-name'),
+            listContainer: document.getElementById('list-container'),
+            fileInput: document.getElementById('file-input')
+        };
+        
+        let customLogoDataUrl = null;
+
+        function setView(viewName) {
+            document.getElementById('view-app').classList.add('hidden');
+            document.getElementById('view-blog').classList.add('hidden');
+            document.getElementById('nav-app').classList.remove('active');
+            document.getElementById('nav-blog').classList.remove('active');
+            if (viewName === 'app') {
+                document.getElementById('view-app').classList.remove('hidden');
+                document.getElementById('nav-app').classList.add('active');
+            } else {
+                document.getElementById('view-blog').classList.remove('hidden');
+                document.getElementById('view-blog').classList.add('flex');
+                document.getElementById('nav-blog').classList.add('active');
+            }
+        }
+        function toggleAdmin() {
+            if (document.getElementById('view-admin').classList.contains('hidden')) setView('admin');
+            else setView('blog');
+        }
+
+        DOM.manualInput.addEventListener('input', updateCount);
+        function updateCount() {
+            const lines = DOM.manualInput.value.split('\n').filter(l => l.trim() !== '');
+            DOM.manualCount.innerText = `${lines.length} participants`;
+        }
+        function clearInput() { DOM.manualInput.value = ''; updateCount(); }
+        function importFile() { DOM.fileInput.click(); }
+        function handleFileImport(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let text = e.target.result;
+                if (text.includes(',') && !text.includes('\n')) text = text.replace(/,/g, '\n');
+                DOM.manualInput.value += (DOM.manualInput.value ? '\n' : '') + text;
+                updateCount();
+                input.value = '';
+            };
+            reader.readAsText(file);
+        }
+
+        function setMode(mode) {
+            state.mode = mode;
+            ['winner', 'teams', 'order', 'tournament', 'santa'].forEach(m => {
+                const btn = document.getElementById(`mode-${m}`);
+                if (m === mode) {
+                    btn.classList.remove('mode-inactive');
+                    btn.classList.add('mode-active');
+                } else {
+                    btn.classList.add('mode-inactive');
+                    btn.classList.remove('mode-active');
+                }
+            });
+            document.getElementById('options-teams').classList.toggle('hidden', mode !== 'teams');
+            document.getElementById('options-tournament').classList.toggle('hidden', mode !== 'tournament');
+        }
+
+        function adjustGroups(delta) {
+            let newCount = state.groups + delta;
+            if (newCount < 2) newCount = 2;
+            state.groups = newCount;
+            document.getElementById('group-count').innerText = state.groups;
+        }
+
+        function startDraw() {
+            const list = DOM.manualInput.value.split('\n').filter(l => l.trim() !== '').map(l => l.trim());
+            const alertMsg = currentLang === 'fr' ? "Ajoutez au moins 2 participants !" : "Add at least 2 participants!";
+            if (list.length < 2) return alert(alertMsg);
+
+            state.isDrawing = true;
+            DOM.resultOverlay.classList.remove('hidden');
+            void DOM.resultOverlay.offsetWidth;
+            DOM.resultOverlay.classList.remove('opacity-0');
+            ['result-winner','result-list','result-actions','result-share','result-article'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            
+            // UI Toggle
+            const imgGenSec = document.getElementById('image-gen-section');
+            const inputWinner = document.getElementById('custom-inputs-winner');
+            const inputTourn = document.getElementById('custom-inputs-tournament');
+            
+            if (imgGenSec) imgGenSec.classList.add('hidden');
+
+            if (state.mode === 'winner') {
+                if(inputWinner) inputWinner.classList.remove('hidden');
+                if(inputTourn) inputTourn.classList.add('hidden');
+            } else if (state.mode === 'tournament') {
+                if(inputWinner) inputWinner.classList.add('hidden');
+                if(inputTourn) inputTourn.classList.add('hidden'); // No custom input needed now
+            }
+
+            if (state.mode === 'winner') {
+                document.getElementById('result-winner').classList.remove('hidden');
+                runWinnerAnimation(list);
+            } else {
+                document.getElementById('result-loading').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('result-loading').classList.add('hidden');
+                    document.getElementById('result-list').classList.remove('hidden');
+                    document.getElementById('result-actions').classList.remove('hidden');
+                    document.getElementById('result-share').classList.remove('hidden');
+                    
+                    if (state.mode === 'winner') {
+                        if(imgGenSec) imgGenSec.classList.remove('hidden');
+                    } else {
+                        if(imgGenSec) imgGenSec.classList.add('hidden');
+                    }
+                    
+                    if (state.mode === 'santa') playSanta();
+                    else playWin();
+
+                    if (state.mode === 'teams') generateTeams(list);
+                    if (state.mode === 'order') generateOrder(list);
+                    if (state.mode === 'tournament') generateTournament(list);
+                    if (state.mode === 'santa') generateSanta(list);
+                }, 1500);
+            }
+        }
+
+        function runWinnerAnimation(list) {
+            let startTime = null;
+            let lastUpdate = 0;
+            const duration = 10000; 
+            DOM.winnerName.style.transition = 'none';
+            DOM.winnerName.style.transform = 'scale(1)';
+            function animate(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const runtime = timestamp - startTime;
+                const progress = Math.min(runtime / duration, 1);
+                const interval = 50 + (800 * Math.pow(progress, 3));
+                if (timestamp - lastUpdate > interval) {
+                    lastUpdate = timestamp;
+                    if (progress < 1) {
+                        const randomName = list[Math.floor(Math.random() * list.length)];
+                        DOM.winnerName.innerText = randomName;
+                        DOM.winnerName.style.transform = `scale(${0.98 + Math.random() * 0.04})`;
+                        playTick(); 
+                    }
+                }
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    const finalWinner = list[Math.floor(Math.random() * list.length)];
+                    DOM.winnerName.innerText = finalWinner;
+                    DOM.winnerName.style.transition = "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)";
+                    DOM.winnerName.style.transform = 'scale(1.5)'; 
+                    setTimeout(() => DOM.winnerName.style.transform = 'scale(1)', 600);
+                    document.getElementById('result-actions').classList.remove('hidden');
+                    document.getElementById('result-share').classList.remove('hidden');
+                    const imgGenSec = document.getElementById('image-gen-section');
+                    if(imgGenSec) imgGenSec.classList.remove('hidden'); 
+                    launchConfetti();
+                    playWin(); 
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function generateTeams(list) {
+            const container = DOM.listContainer;
+            container.innerHTML = '';
+            let shuffled = [...list].sort(() => Math.random() - 0.5);
+            let teams = Array.from({length: state.groups}, () => []);
+            shuffled.forEach((p, i) => teams[i % state.groups].push(p));
+            teams.forEach((team, i) => {
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-xl fade-in mb-3";
+                let members = team.map(m => `<div class="py-1 border-b border-white/5 last:border-0 opacity-80 text-sm"><i class="fa-solid fa-user-tag text-xs mr-2 text-purple-400"></i>${m}</div>`).join('');
+                card.innerHTML = `<div class="font-bold text-pink-500 mb-2 flex items-center"><span class="bg-pink-500/20 px-2 py-0.5 rounded text-xs mr-2">Groupe ${i+1}</span> <span class="text-xs opacity-60 ml-auto">${team.length} pers.</span></div><div class="pl-1">${members}</div>`;
+                container.appendChild(card);
+            });
+            document.getElementById('list-title').innerText = translations[currentLang]['result_teams_title'] || "Équipes Formées";
+            launchConfetti();
+        }
+
+        function generateOrder(list) {
+            const container = DOM.listContainer;
+            container.innerHTML = '';
+            let shuffled = [...list].sort(() => Math.random() - 0.5);
+            shuffled.forEach((p, i) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center bg-white/5 p-3 rounded-lg mb-2 fade-in border border-white/5";
+                let bg = i===0?"bg-yellow-500 text-black":i===1?"bg-slate-300 text-black":i===2?"bg-amber-700 text-white":"bg-slate-700 text-slate-300";
+                row.innerHTML = `<div class="w-8 h-8 ${bg} rounded-full flex items-center justify-center font-bold text-sm mr-3 shadow-lg">${i+1}</div><div class="font-medium opacity-90">${p}</div>`;
+                container.appendChild(row);
+            });
+            document.getElementById('list-title').innerText = translations[currentLang]['result_order_title'] || "Ordre de Passage";
+        }
+
+        function generateTournament(list) {
+            const container = DOM.listContainer;
+            container.innerHTML = '';
+            const fullBracket = document.getElementById('tournament-full').checked;
+            let shuffled = [...list].sort(() => Math.random() - 0.5);
+            
+            let globalMatchId = 1;
+            let nextRoundParticipants = []; 
+            let roundsData = []; 
+
+            // --- ROUND 1 ---
+            let round1Matches = [];
+            while(shuffled.length >= 2) {
+                const p1 = shuffled.pop();
+                const p2 = shuffled.pop();
+                const matchId = globalMatchId++;
+                round1Matches.push({ id: matchId, p1, p2 });
+                nextRoundParticipants.push((currentLang === 'fr' ? "Vainqueur M" : "Winner M") + matchId);
+            }
+            
+            let bye = null;
+            if (shuffled.length > 0) {
+                bye = shuffled.pop();
+                nextRoundParticipants.push(bye); 
+            }
+            
+            // Display Round 1
+            const roundTitle = document.createElement('div');
+            roundTitle.className = "text-xs font-bold text-pink-500 uppercase tracking-widest mb-3 mt-2";
+            roundTitle.innerText = translations[currentLang]['round_1'] || "1er Tour";
+            container.appendChild(roundTitle);
+
+            round1Matches.forEach(m => {
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between bg-white/5 p-4 rounded-lg mb-2 fade-in border border-white/5 relative overflow-hidden group hover:border-pink-500/30 transition-colors";
+                const badge = `<div class="absolute top-1 left-2 text-[8px] uppercase font-bold text-yellow-400 tracking-wider bg-black/50 px-1 rounded">Match ${m.id}</div>`;
+                const vs = document.createElement('div');
+                vs.className = "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-lg z-10 border-2 border-slate-900";
+                vs.innerText = "VS";
+                row.innerHTML = `${badge}<div class="flex-1 text-center pr-4 font-bold opacity-90 pt-2">${m.p1}</div>${vs.outerHTML}<div class="flex-1 text-center pl-4 font-bold opacity-90 pt-2">${m.p2}</div>`;
+                container.appendChild(row);
+            });
+
+            if (bye) {
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-center bg-white/5 p-4 rounded-lg mb-2 fade-in border border-white/5 border-dashed opacity-70";
+                row.innerHTML = `<span class="text-xs text-muted-custom mr-2">Qualifié d'office :</span> <span class="font-bold opacity-90">${bye}</span>`;
+                container.appendChild(row);
+            }
+
+            // --- SUBSEQUENT ROUNDS ---
+            if (fullBracket && nextRoundParticipants.length > 1) {
+                let roundNum = 2;
+                while (nextRoundParticipants.length > 1) {
+                    const currentRoundInput = [...nextRoundParticipants];
+                    nextRoundParticipants = []; 
+                    let currentRoundMatches = [];
+                    let currentBye = null;
+
+                    let roundName = (translations[currentLang]['round_x'] || "Tour") + " " + roundNum;
+                    if (currentRoundInput.length === 2) roundName = translations[currentLang]['final'] || "Finale";
+                    else if (currentRoundInput.length <= 4) roundName = translations[currentLang]['semi_finals'] || "Demi-Finales";
+
+                    while(currentRoundInput.length >= 2) {
+                        const p1 = currentRoundInput.shift(); 
+                        const p2 = currentRoundInput.shift(); 
+                        const matchId = globalMatchId++;
+                        currentRoundMatches.push({ id: matchId, p1, p2 });
+                        nextRoundParticipants.push((currentLang === 'fr' ? "Vainqueur M" : "Winner M") + matchId);
+                    }
+
+                    if (currentRoundInput.length > 0) {
+                        currentBye = currentRoundInput.shift();
+                        nextRoundParticipants.push(currentBye);
+                    }
+                    roundsData.push({ title: roundName, matches: currentRoundMatches, bye: currentBye });
+                    roundNum++;
+                }
+            }
+
+            state.tournamentData = roundsData; // Save for image gen
+
+            // RENDER TO DOM
+            roundsData.forEach((round, index) => {
+                const roundTitle = document.createElement('div');
+                roundTitle.className = index === 0 ? "text-xs font-bold text-pink-500 uppercase tracking-widest mb-3 mt-2" : "text-xs font-bold text-purple-400 uppercase tracking-widest mb-3 mt-6 border-t border-white/10 pt-4";
+                roundTitle.innerText = round.title;
+                container.appendChild(roundTitle);
+
+                round.matches.forEach(m => {
+                    const row = document.createElement('div');
+                    row.className = "flex items-center justify-between bg-white/5 p-4 rounded-lg mb-2 fade-in border border-white/5 relative overflow-hidden group hover:border-pink-500/30 transition-colors";
+                    const badge = `<div class="absolute top-1 left-2 text-[8px] uppercase font-bold text-yellow-400 tracking-wider bg-black/50 px-1 rounded">Match ${m.id}</div>`;
+                    const vs = document.createElement('div');
+                    vs.className = "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-lg z-10 border-2 border-slate-900";
+                    vs.innerText = "VS";
+                    row.innerHTML = `${badge}<div class="flex-1 text-center pr-4 font-bold opacity-90 pt-2">${m.p1}</div>${vs.outerHTML}<div class="flex-1 text-center pl-4 font-bold opacity-90 pt-2">${m.p2}</div>`;
+                    container.appendChild(row);
+                });
+
+                if (round.bye) {
+                    const row = document.createElement('div');
+                    row.className = "flex items-center justify-center bg-white/5 p-4 rounded-lg mb-2 fade-in border border-white/5 border-dashed opacity-70";
+                    row.innerHTML = `<span class="text-xs text-muted-custom mr-2">Qualifié d'office :</span> <span class="font-bold opacity-90">${round.bye}</span>`;
+                    container.appendChild(row);
+                }
+            });
+            document.getElementById('list-title').innerText = translations[currentLang]['result_tournament_title'] || "Tableau du Tournoi";
+        }
+
+        function generateSanta(list) {
+            const container = DOM.listContainer;
+            container.innerHTML = '';
+            let shuffled = [...list];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            shuffled.forEach((person, i) => {
+                const receiver = shuffled[(i + 1) % shuffled.length];
+                const card = document.createElement('div');
+                card.className = "santa-spoiler bg-white/5 p-4 rounded-lg mb-2 fade-in border border-white/5 flex justify-between items-center";
+                card.innerHTML = `
+                    <div class="flex-1 font-bold opacity-90 flex items-center gap-2">
+                        <i class="fa-solid fa-user-secret text-pink-400"></i> ${person}
+                    </div>
+                    <div class="flex-1 text-right relative min-w-[120px]">
+                        <span class="hidden-content font-mono text-pink-300">👉 ${receiver}</span>
+                        <div class="reveal-text">CLIQUEZ</div>
+                    </div>
+                `;
+                card.addEventListener('click', function() { this.classList.toggle('revealed'); });
+                container.appendChild(card);
+            });
+            document.getElementById('list-title').innerText = translations[currentLang]['result_santa_title'] || "Secret Santa 🎅";
+        }
+
+        function closeResult() {
+            DOM.resultOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                DOM.resultOverlay.classList.add('hidden');
+                ['result-winner','result-list','result-actions','result-share','result-article'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            }, 300);
+            state.isDrawing = false;
+        }
+
+        window.getResultText = () => {
+            let text = "";
+            const url = window.location.href;
+            if (state.mode === 'winner') text = `🏆 Le gagnant est : ${DOM.winnerName.innerText} ! \nTirage effectué sur Luckify 🎲 ${url}`;
+            else if (state.mode === 'teams') text = "📋 Équipes générées sur Luckify 🎲 : " + url;
+            else if (state.mode === 'tournament') text = "⚔️ Matchs générés sur Luckify 🎲 : " + url;
+            else if (state.mode === 'santa') text = "🎅 Secret Santa organisé sur Luckify 🎲 : " + url;
+            else text = "🔢 Ordre de passage généré sur Luckify 🎲 : " + url;
+            return text;
+        };
+
+        window.shareSocial = (platform) => {
+            const text = window.getResultText();
+            const url = encodeURIComponent(window.location.href);
+            const encodedText = encodeURIComponent(text);
+            const toastMsg = currentLang === 'fr' ? "Texte copié ! Ouvrez l'app pour coller." : "Text copied! Open the app to paste.";
+            if (['instagram','tiktok','youtube'].includes(platform)) {
+                window.copyToClipboard(text);
+                window.showToast(toastMsg);
+            } else if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${encodedText}`);
+            else if (platform === 'whatsapp') window.open(`https://api.whatsapp.com/send?text=${encodedText}`);
+            else if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
+            else if (platform === 'linkedin') window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
+            else if (platform === 'reddit') window.open(`https://www.reddit.com/submit?url=${url}&title=${encodedText}`);
+            else if (platform === 'email') window.open(`mailto:?subject=Luckify&body=${encodedText}`);
+        };
+        
+        window.copyToClipboard = (text) => {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+        };
+
+        window.showToast = (msg) => {
+            const toast = document.getElementById('share-toast');
+            toast.innerText = msg;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => toast.classList.add('opacity-0'), 2000);
+        };
+        
+        window.copyResults = () => {
+            window.copyToClipboard(window.getResultText());
+            window.showToast(currentLang === 'fr' ? 'Copié !' : 'Copied!');
+        };
+        
+        window.openArticle = (category, title, contentHTML) => {
+            document.getElementById('article-category').innerText = category;
+            document.getElementById('article-title').innerText = title;
+            document.getElementById('article-body').innerHTML = contentHTML;
+            const overlay = document.getElementById('result-overlay');
+            overlay.classList.remove('hidden');
+            ['result-loading','result-winner','result-list','result-actions','result-share','image-gen-section'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.add('hidden');
+            });
+            document.getElementById('result-article').classList.remove('hidden');
+            void overlay.offsetWidth;
+            overlay.classList.remove('opacity-0');
+        };
+
+        window.generateImage = (format) => {
+            if (state.mode !== 'winner') return alert("La génération d'image n'est disponible que pour le mode 'Gagnant'.");
+            
+            const template = document.getElementById('capture-template');
+            
+            // Only Winner Content
+            document.getElementById('capture-winner').innerText = document.getElementById('winner-name').innerText;
+            
+            const customTitle = document.getElementById('custom-title-input').value;
+            const contestEl = document.getElementById('capture-contest-name');
+            if (customTitle) { contestEl.innerText = customTitle; contestEl.style.display = 'block'; }
+            else { contestEl.style.display = 'none'; }
+            
+            const customFooter = document.getElementById('custom-footer-input').value;
+            if (customFooter) document.querySelector('#capture-footer').innerText = customFooter;
+            else document.querySelector('#capture-footer').innerText = translations[currentLang]['tool_subtitle'] || "Gratuit, sans inscription et impartial";
+
+            if (format === 'story') {
+                template.style.width = '1080px';
+                template.style.height = '1920px';
+                document.querySelector('#capture-winner').style.fontSize = '120px';
+            } else { 
+                template.style.width = '1080px';
+                template.style.height = '1080px';
+                document.querySelector('#capture-winner').style.fontSize = '130px';
+            }
+            
+            html2canvas(template, { scale: 1, backgroundColor: null, useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `azardraw-result-${format}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            }).catch(err => {
+                console.error(err);
+                alert("Erreur génération image.");
+            });
+        };
+
+        // --- COOKIE LOGIC ---
+        function checkCookies() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                document.getElementById('cookie-banner').style.display = 'flex';
+            } else if (consent === 'accepted') {
+                loadAds();
+            }
+        }
+        window.acceptCookies = () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookie-banner').style.display = 'none';
+            loadAds();
+        };
+        window.refuseCookies = () => {
+            localStorage.setItem('cookieConsent', 'refused');
+            document.getElementById('cookie-banner').style.display = 'none';
+        };
+        function loadAds() {
+            console.log("Ads loading enabled");
+        }
+
+        function launchConfetti() {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#c084fc', '#db2777', '#fbbf24'] });
+        }
+    </script>
+</body>
+</html>
