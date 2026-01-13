@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- ==========================================
-       SEO OPTIMIZATIONS
+       OPTIMISATION SEO
     ========================================== -->
     <title>AzarDraw - Tirage au Sort Gratuit, Secret Santa & Tournois en Ligne</title>
     <meta name="description" content="Le meilleur outil de tirage au sort gratuit et sans inscription. Désignez un gagnant (concours Instagram), organisez un Secret Santa ou générez des arbres de tournoi en un clic.">
@@ -13,8 +13,11 @@
     <meta name="author" content="AzarDraw">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://azardraw.com/">
+    
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
 
-    <!-- Open Graph (Facebook / WhatsApp / LinkedIn) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://azardraw.com/">
     <meta property="og:title" content="AzarDraw - Tirage au Sort, Secret Santa & Tournois Gratuits">
@@ -22,17 +25,21 @@
     <meta property="og:image" content="https://images.unsplash.com/photo-1605218427306-022ba8c39f05?q=80&w=1200&h=630&auto=format&fit=crop">
     <meta property="og:site_name" content="AzarDraw">
 
-    <!-- Twitter / X -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://azardraw.com/">
     <meta name="twitter:title" content="AzarDraw - Tirage au Sort & Tournois Gratuits">
     <meta name="twitter:description" content="Réalisez vos tirages au sort en ligne gratuitement. Gagnants, équipes, ordre de passage et Secret Santa.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1605218427306-022ba8c39f05?q=80&w=1200&h=630&auto=format&fit=crop">
 
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Libs -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
         
@@ -107,6 +114,10 @@
         
         .bracket-node { border: 2px solid #000; background: #fff; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 20px; color: #1e293b; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 16px; }
         #result-list { max-height: 50vh; overflow-y: auto; padding-bottom: 20px; }
+
+        /* Tooltip */
+        .group:hover .tooltip { opacity: 1; pointer-events: auto; }
+        .tooltip { transition: opacity 0.2s; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -120,7 +131,12 @@
                 <button onclick="setView('app')" id="nav-app" class="nav-link active" data-i18n="nav_app">Application</button>
                 <button onclick="setView('blog')" id="nav-blog" class="nav-link" data-i18n="nav_blog">Blog</button>
             </div>
-            <button onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors border border-white/10 text-sm shadow-sm"><i class="fa-solid fa-sun hidden text-amber-500 text-lg" id="icon-sun"></i><i class="fa-solid fa-moon text-indigo-300 text-lg" id="icon-moon"></i></button>
+            
+            <!-- Language Selector -->
+            <button onclick="toggleLanguage()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors border border-white/10 text-xs font-bold shadow-sm" id="lang-display" title="Changer de langue">FR</button>
+
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors border border-white/10 text-sm shadow-sm"><i class="fa-solid fa-sun hidden text-amber-500 text-lg" id="icon-sun"></i><i class="fa-solid fa-moon text-indigo-300 text-lg" id="icon-moon"></i></button>
         </div>
     </nav>
 
@@ -155,23 +171,23 @@
                             <div class="flex flex-col gap-3">
                                 <button onclick="setMode('winner')" id="mode-winner" class="relative group mode-active p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-trophy text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_winner">Gagnant</span><span class="text-[10px] opacity-70" data-i18n="desc_winner">Tirage unique</span></div>
-                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_winner">Désigne un unique vainqueur au hasard.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_winner">Désigne un unique vainqueur au hasard.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('teams')" id="mode-teams" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-users text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_teams">Équipes</span><span class="text-[10px] opacity-70" data-i18n="desc_teams">Créer des groupes</span></div>
-                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_teams">Répartit aléatoirement les participants en groupes.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_teams">Répartit aléatoirement les participants en groupes.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('order')" id="mode-order" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-arrow-down-1-9 text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_order">Ordre</span><span class="text-[10px] opacity-70" data-i18n="desc_order">Mélanger la liste</span></div>
-                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_order">Mélange la liste pour définir un ordre de passage.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_order">Mélange la liste pour définir un ordre de passage.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('tournament')" id="mode-tournament" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-sitemap text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_tournament">Tournoi</span><span class="text-[10px] opacity-70" data-i18n="desc_tournament">Arbre de matchs</span></div>
-                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_tournament">Génère les matchs du premier tour (bracket).</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_tournament">Génère les matchs du premier tour (bracket).</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('santa')" id="mode-santa" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-gifts text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_santa">Secret Santa</span><span class="text-[10px] opacity-70" data-i18n="desc_santa">Échange de cadeaux</span></div>
-                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_santa">Assigne un destinataire secret à chaque participant.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_santa">Assigne un destinataire secret à chaque participant.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                             </div>
                             <div id="options-teams" class="hidden mt-4 p-4 bg-white/5 rounded-xl border border-white/10 fade-in">
@@ -350,7 +366,10 @@
                 tooltip_santa: "Assigne un destinataire secret à chaque participant.",
                 cookie_text: "Ce site est 100% gratuit. La publicité est notre seul revenu pour payer les serveurs. Acceptez-vous les cookies publicitaires pour nous aider à maintenir l'outil en ligne ?",
                 cookie_accept: "Oui, je soutiens !", cookie_refuse: "Continuer sans",
-                option_full_bracket: "Arbre jusqu'à la finale", final: "Finale", semi_finals: "Demi-Finales", round_x: "Tour", round_1: "1er Tour"
+                option_full_bracket: "Arbre jusqu'à la finale", final: "Finale", semi_finals: "Demi-Finales", round_x: "Tour", round_1: "1er Tour",
+                tournament_bracket_title: "Tableau du Tournoi", winner_m: "Vainqueur M",
+                meta_description: "L'outil ultime pour vos tirages au sort. Désignez un gagnant, organisez un Secret Santa ou générez un arbre de tournoi gratuitement.",
+                meta_title: "AzarDraw - Tirage au Sort Gratuit, Secret Santa & Tournois en Ligne"
             },
             en: {
                 nav_app: "App", nav_blog: "Blog", tool_title: "Random Picker", tool_subtitle: "Free, no signup, fair",
@@ -372,16 +391,53 @@
                 tooltip_santa: "Assigns a secret recipient to each participant.",
                 cookie_text: "This site is 100% free. Advertising pays for our servers. Do you accept ad cookies to help us keep this tool online?",
                 cookie_accept: "Yes, I support!", cookie_refuse: "Continue without",
-                option_full_bracket: "Full bracket to final", final: "Final", semi_finals: "Semi-Finals", round_x: "Round", round_1: "Round 1"
+                option_full_bracket: "Full bracket to final", final: "Final", semi_finals: "Semi-Finals", round_x: "Round", round_1: "Round 1",
+                tournament_bracket_title: "Tournament Bracket", winner_m: "Winner M",
+                meta_description: "The ultimate tool for random draws. Pick a winner, organize a Secret Santa, or generate a tournament bracket for free.",
+                meta_title: "AzarDraw - Free Random Picker, Secret Santa & Online Tournaments"
             }
         };
 
         let currentLang = 'fr';
-        function detectAndApplyLanguage() {
-            const userLang = navigator.language || navigator.userLanguage;
-            currentLang = userLang.startsWith('fr') ? 'fr' : 'en';
-            applyTranslations();
+
+        function initLanguage() {
+            // Priority: LocalStorage > Navigator > Default (FR)
+            const savedLang = localStorage.getItem('userLang');
+            if (savedLang) {
+                currentLang = savedLang;
+            } else {
+                const userLang = navigator.language || navigator.userLanguage;
+                currentLang = userLang.startsWith('fr') ? 'fr' : 'en';
+            }
+            updateLanguageUI();
         }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            localStorage.setItem('userLang', currentLang);
+            updateLanguageUI();
+        }
+
+        function updateLanguageUI() {
+            document.documentElement.lang = currentLang;
+            
+            // Update Toggle Button Text
+            const langBtn = document.getElementById('lang-display');
+            if(langBtn) langBtn.innerText = currentLang.toUpperCase();
+            
+            // Update Page Metadata (SEO)
+            document.title = translations[currentLang]['meta_title'];
+            document.querySelector('meta[name="description"]').setAttribute("content", translations[currentLang]['meta_description']);
+            document.querySelector('meta[property="og:title"]').setAttribute("content", translations[currentLang]['meta_title']);
+            document.querySelector('meta[property="og:description"]').setAttribute("content", translations[currentLang]['meta_description']);
+
+            // Apply text translations
+            applyTranslations();
+            
+            // Re-render blog if visible
+            renderBlog();
+        }
+
         function applyTranslations() {
             const texts = translations[currentLang];
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -393,11 +449,6 @@
                 if (texts[key]) el.placeholder = texts[key];
             });
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            detectAndApplyLanguage();
-            renderBlog();
-            checkCookies();
-        });
 
         const blogData = {
             fr: [
@@ -474,85 +525,85 @@
             ],
             en: [
                 {
-                    title: "How to do a free random draw without registration?",
+                    title: "How to run a free random draw?",
                     category: "Practical Guide",
                     icon: "fa-solid fa-check-circle",
-                    summary: "Discover AzarDraw, the simplest tool to organize your contests. No account, no fees, immediate results.",
-                    content: `<p class="mb-4">Organizing a random draw should be simple. With AzarDraw, copy your list, click, and it's won. Ideal for teachers, managers, or content creators who want to go fast.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Why use an online random generator?</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Total impartiality:</strong> Unlike a human, the algorithm favors no one. It's mathematical.</li><li><strong>Transparency:</strong> You can record your screen to prove to your community that the result is authentic.</li><li><strong>Speed:</strong> Copy your Excel or text list, paste it, and get the result in less than 3 seconds.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">3 Frequent Use Cases</h3><ol class="list-decimal pl-5 space-y-2 mb-4"><li><strong>For Teachers:</strong> Pick a student at random to go to the board without being accused of favoritism.</li><li><strong>For Managers:</strong> Assign ungrateful tasks or on-call duties in a fun and fair way.</li><li><strong>For Creators (Instagram/TikTok):</strong> Select a winner among your exported comments for your contests.</li></ol>`
+                    summary: "Discover AzarDraw, the simplest tool for your giveaways. No account, free, instant results.",
+                    content: `<p class="mb-4">Organizing a draw should be simple. With AzarDraw, paste your list, click, and you're done. Perfect for teachers or influencers.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Why use an online random generator?</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Total impartiality:</strong> Unlike a human, the algorithm favors no one. It's mathematical.</li><li><strong>Transparency:</strong> You can record your screen to prove to your community that the result is authentic.</li><li><strong>Speed:</strong> Copy your Excel or text list, paste it, and get the result in less than 3 seconds.</li></ul>`
                 },
                 {
-                    title: "Organizing an Online Secret Santa: The Complete Guide",
-                    category: "Ideas & Inspiration",
+                    title: "Organize a Secret Santa online",
+                    category: "Inspiration",
                     icon: "fa-solid fa-gifts",
-                    summary: "No more lost little papers! Use our Secret Santa mode to assign gifts remotely.",
-                    content: `<p class="mb-4"><strong>Secret Santa</strong> has become the essential tradition of end-of-year celebrations. But logistical organization can quickly become a nightmare.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How does our algorithm work?</h3><p class="mb-4">AzarDraw uses a simplified "closed cycle" algorithm to ensure that:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li>No one draws themselves (mathematically impossible).</li><li>There are no isolated subgroups (A gives to B, and B gives to A). Instead, we create a large chain: A ➔ B ➔ C ➔ D ➔ A.</li><li>Everyone receives exactly one gift.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">Golden rules for a successful exchange</h3><div class="bg-white/5 p-4 rounded-lg mb-4"><p><strong>1. Set a budget:</strong> Agree on a max amount so no one feels cheated.</p><p class="mt-2"><strong>2. The Theme:</strong> Impose a theme to stimulate creativity.</p><p class="mt-2"><strong>3. The Reveal:</strong> Use our "Secret Santa" mode on a single phone passed from hand to hand.</p></div>`
+                    summary: "No more lost papers! Use our Secret Santa mode for your gift exchanges.",
+                    content: `<p class="mb-4"><strong>Secret Santa</strong> has become the essential tradition of end-of-year celebrations. But logistical organization can quickly become a nightmare.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How does our algorithm work?</h3><p class="mb-4">AzarDraw uses a simplified "closed cycle" algorithm to ensure that:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li>No one draws themselves (mathematically impossible).</li><li>There are no isolated subgroups (A gives to B, and B gives to A). Instead, we create a large chain: A ➔ B ➔ C ➔ D ➔ A.</li><li>Everyone receives exactly one gift.</li></ul>`
                 },
                 {
-                    title: "Tournament Generator: Create your brackets easily",
-                    category: "Tools & Tech",
+                    title: "Tournaments: Generate your brackets",
+                    category: "Tools",
                     icon: "fa-solid fa-sitemap",
-                    summary: "FIFA, Ping-Pong or E-sport? Instantly generate pairs for your tournament brackets.",
-                    content: `<p class="mb-4">Organizing an impromptu tournament often ends with scribbled papers. Whether you're organizing a <strong>FIFA</strong> night or an office <strong>Ping-Pong</strong> tournament, structure is key.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How to handle odd numbers?</h3><p class="mb-4">Our algorithm automatically manages <strong>"Byes"</strong> (automatic qualifications). If the number of participants is odd, the system draws a lucky player who will go directly to the next round without playing.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Example of generated structure</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Match 1:</strong> Player A <span class="text-pink-400 font-bold">VS</span> Player B</li><li><strong>Match 2:</strong> Player C <span class="text-pink-400 font-bold">VS</span> Player D</li><li><strong>Qualified:</strong> Player E (awaits winner of match 1)</li></ul><p>Use AzarDraw's <strong>"Tournament"</strong> mode to generate these pairings in a second!</p>`
+                    summary: "For gaming or sports, create your tournament brackets instantly.",
+                    content: `<p class="mb-4">Organizing an impromptu tournament often ends with scribbled papers. Whether you're organizing a <strong>FIFA</strong> night or an office <strong>Ping-Pong</strong> tournament, structure is key.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How to handle odd numbers?</h3><p class="mb-4">Our algorithm automatically manages <strong>"Byes"</strong> (automatic qualifications). If the number of participants is odd, the system draws a lucky player who will go directly to the next round without playing.</p>`
                 },
                 {
                     title: "Online Random Picker: The tool to pick a volunteer",
-                    category: "Ideas & Inspiration",
+                    category: "Inspiration",
                     icon: "fa-solid fa-hand-point-up",
                     summary: "Who does the dishes? Who starts the presentation? Let chance decide without arguments.",
-                    content: `<p class="mb-4">The digital "Eeny Meeny Miny Moe" is the essential tool for community life. Sometimes you have to make an arbitrary decision.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">When to use the single draw?</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-purple-300">At Work 💼</h4><p class="text-sm opacity-80">Who presents the PowerPoint? Who gets the coffee?</p></div><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-pink-300">At Home 🏠</h4><p class="text-sm opacity-80">Who takes out the trash? Who chooses the movie tonight?</p></div></div><p class="mb-4">The advantage of using <strong>AzarDraw</strong> is the indisputability of the result.</p>`
+                    content: `<p class="mb-4">The digital "Eeny Meeny Miny Moe" is the essential tool for community life. Sometimes you have to make an arbitrary decision.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">When to use the single draw?</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-purple-300">At Work 💼</h4><p class="text-sm opacity-80">Who presents the PowerPoint? Who gets the coffee?</p></div><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-pink-300">At Home 🏠</h4><p class="text-sm opacity-80">Who takes out the trash? Who chooses the movie tonight?</p></div></div>`
                 },
                 {
                     title: "How to draw balanced teams?",
                     category: "Practical Guide",
                     icon: "fa-solid fa-users",
-                    summary: "Split your class or colleagues into random groups in seconds.",
-                    content: `<p class="mb-4">Building teams is often a delicate moment. Letting participants choose themselves often leads to imbalances.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Ideal for Team Building and Education</h3><p class="mb-4">Our random team generator is particularly popular for:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Teachers:</strong> To create heterogeneous work pairs.</li><li><strong>Hackathons:</strong> To mix skills randomly.</li><li><strong>Board Games:</strong> To define teams without couples always being together.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">How does it work?</h3><p>Simply enter the complete list of participants. Choose the desired <strong>number of groups</strong>. The algorithm will mathematically distribute people so that groups are of equal size.</p>`
+                    summary: "Split your friends or colleagues into equal groups in seconds.",
+                    content: `<p class="mb-4">Building teams is often a delicate moment. Letting participants choose themselves often leads to imbalances.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Ideal for Team Building and Education</h3><p class="mb-4">Our random team generator is particularly popular for:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Teachers:</strong> To create heterogeneous work pairs.</li><li><strong>Hackathons:</strong> To mix skills randomly.</li><li><strong>Board Games:</strong> To define teams without couples always being together.</li></ul>`
                 },
                 {
-                    title: "Influencers: The Ultimate Guide for your Contests",
+                    title: "Influencers: Succeed with Instagram Contests",
                     category: "Practical Guide",
                     icon: "fa-solid fa-star",
-                    summary: "Want to grow your community without risking a shadowban? Here are the golden rules.",
+                    summary: "Golden rules to organize a legal, viral, and safe giveaway.",
                     content: `<p class="mb-4">Contests are the #1 growth lever. But be careful, platforms have strict rules.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">1. Transparency</h3><p class="mb-4">Never do a draw "in secret". Use a third-party tool like <strong>AzarDraw</strong> and record your screen.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">2. Mandatory Legal Mentions</h3><p class="mb-4">You MUST include: "This contest is not managed or sponsored by the platform."</p><h3 class="text-xl font-bold text-white mt-6 mb-3">3. The Winning Mechanic</h3><p>Avoid overly complex mechanics. The perfect combo: <strong>Like + Tag 2 friends + Follow</strong>.</p>`
                 },
                 {
-                    title: "Top 10 funny dares for losers",
-                    category: "Ideas & Inspiration",
+                    title: "Top 10 dares for losers",
+                    category: "Fun",
                     icon: "fa-solid fa-masks-theater",
-                    summary: "Spice up your parties! The draw can also designate the victim of a hilarious dare.",
+                    summary: "Spice up your parties with funny challenges for the unlucky ones.",
                     content: `<p class="mb-4">You use AzarDraw's "Winner" mode to designate who does the dishes? Useful, but we can do funnier.</p><ol class="list-decimal pl-5 space-y-2 mb-4"><li>Speak without using the letter "E".</li><li>Serve drinks with an accent.</li><li>Like the first 5 photos of an ex's account.</li><li>Give a 2-minute speech on snail reproduction.</li><li>Mandatory victory dance, even if lost.</li></ol>`
                 },
                 {
-                    title: "Teachers: Energize your classes with randomness",
-                    category: "Practical Guide",
+                    title: "Teachers: Energize your classes",
+                    category: "Education",
                     icon: "fa-solid fa-graduation-cap",
-                    summary: "How to use AzarDraw in class to form work groups or question students.",
+                    summary: "Use randomness to pick students or form groups without conflict.",
                     content: `<p class="mb-4">Classroom management is a daily challenge. Randomness is your best pedagogical ally.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Oral Questioning</h3><p class="mb-4">Projecting AzarDraw creates a playful moment of suspense that de-dramatizes evaluation.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Social Mixing</h3><p>Use the <strong>"Teams"</strong> mode to break up cliques. By mixing levels and affinities, you encourage mutual aid.</p>`
                 },
                 {
-                    title: "What is RNG? Understanding the algorithm",
-                    category: "Tools & Tech",
+                    title: "What is RNG? Explained",
+                    category: "Tech",
                     icon: "fa-solid fa-code",
-                    summary: "AzarDraw uses a Pseudo-Random Number Generator (PRNG).",
+                    summary: "How the randomness algorithm works behind AzarDraw.",
                     content: `<p class="mb-4">RNG stands for <strong>Random Number Generator</strong>. But did you know a computer is incapable of true randomness?</p><p class="mb-4">A computer uses a "seed" and applies complex math operations.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Why is AzarDraw reliable?</h3><p>We use the standard \`Math.random()\` API of modern browsers, which is cryptographically secure for gaming applications.</p>`
                 },
                 {
-                    title: "Organizing a last-minute Secret Santa",
-                    category: "Ideas & Inspiration",
+                    title: "Last Minute Secret Santa",
+                    category: "Guide",
                     icon: "fa-solid fa-sleigh",
-                    summary: "It's December 20th and nothing is ready? Don't panic.",
+                    summary: "Late for Xmas? Save your party with digital name drawing.",
                     content: `<p class="mb-4">Secret Santa is great, but logistics are heavy. AzarDraw digitalizes it all.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">The Emergency Protocol</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Step 1:</strong> Create a WhatsApp group.</li><li><strong>Step 2:</strong> Get the list.</li><li><strong>Step 3:</strong> Enter names in AzarDraw, <strong>"Secret Santa"</strong> mode.</li><li><strong>Step 4:</strong> If remote, a neutral person does the draw and sends results via DM!</li></ul>`
                 }
             ]
         };
 
+        // ... (Keep renderBlog and rest of logic) ...
         function renderBlog() {
             const container = document.getElementById('blog-posts-container');
             const loading = document.getElementById('blog-loading');
-            
             if (container) {
                 container.innerHTML = '';
-                const articles = blogData[currentLang] || blogData['fr']; // Fallback to FR
+                const articles = blogData[currentLang] || blogData['fr']; // Fallback
                 
                 articles.forEach(post => {
                     const card = document.createElement('article');
@@ -717,19 +768,16 @@
             DOM.resultOverlay.classList.remove('opacity-0');
             ['result-winner','result-list','result-actions','result-share','result-article'].forEach(id => document.getElementById(id).classList.add('hidden'));
             
-            // UI Toggle
-            const imgGenSec = document.getElementById('image-gen-section');
-            const inputWinner = document.getElementById('custom-inputs-winner');
-            const inputTourn = document.getElementById('custom-inputs-tournament');
-            
-            if (imgGenSec) imgGenSec.classList.add('hidden');
-
+            // UI Toggle for Image Gen buttons
             if (state.mode === 'winner') {
-                if(inputWinner) inputWinner.classList.remove('hidden');
-                if(inputTourn) inputTourn.classList.add('hidden');
+                document.getElementById('image-gen-section').classList.add('hidden'); // Initially hidden
+                document.getElementById('custom-inputs-winner').classList.remove('hidden');
+                document.getElementById('custom-inputs-tournament').classList.add('hidden');
             } else if (state.mode === 'tournament') {
-                if(inputWinner) inputWinner.classList.add('hidden');
-                if(inputTourn) inputTourn.classList.add('hidden'); // No custom input needed now
+                // Tournament image gen disabled per user request
+                 document.getElementById('image-gen-section').classList.add('hidden');
+            } else {
+                 document.getElementById('image-gen-section').classList.add('hidden');
             }
 
             if (state.mode === 'winner') {
@@ -743,10 +791,11 @@
                     document.getElementById('result-actions').classList.remove('hidden');
                     document.getElementById('result-share').classList.remove('hidden');
                     
+                    // Show Image Gen ONLY for Winner 
                     if (state.mode === 'winner') {
-                        if(imgGenSec) imgGenSec.classList.remove('hidden');
+                        document.getElementById('image-gen-section').classList.remove('hidden');
                     } else {
-                        if(imgGenSec) imgGenSec.classList.add('hidden');
+                        document.getElementById('image-gen-section').classList.add('hidden');
                     }
                     
                     if (state.mode === 'santa') playSanta();
@@ -979,11 +1028,11 @@
         window.getResultText = () => {
             let text = "";
             const url = window.location.href;
-            if (state.mode === 'winner') text = `🏆 Le gagnant est : ${DOM.winnerName.innerText} ! \nTirage effectué sur Luckify 🎲 ${url}`;
-            else if (state.mode === 'teams') text = "📋 Équipes générées sur Luckify 🎲 : " + url;
-            else if (state.mode === 'tournament') text = "⚔️ Matchs générés sur Luckify 🎲 : " + url;
-            else if (state.mode === 'santa') text = "🎅 Secret Santa organisé sur Luckify 🎲 : " + url;
-            else text = "🔢 Ordre de passage généré sur Luckify 🎲 : " + url;
+            if (state.mode === 'winner') text = `🏆 Le gagnant est : ${DOM.winnerName.innerText} ! \nTirage effectué sur AzarDraw 🎲 ${url}`;
+            else if (state.mode === 'teams') text = "📋 Équipes générées sur AzarDraw 🎲 : " + url;
+            else if (state.mode === 'tournament') text = "⚔️ Matchs générés sur AzarDraw 🎲 : " + url;
+            else if (state.mode === 'santa') text = "🎅 Secret Santa organisé sur AzarDraw 🎲 : " + url;
+            else text = "🔢 Ordre de passage généré sur AzarDraw 🎲 : " + url;
             return text;
         };
 
