@@ -13,12 +13,14 @@
     <meta name="author" content="AzarDraw">
     <meta name="robots" content="index, follow">
     <meta name="google-adsense-account" content="ca-pub-8104931512923720">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8104931512923720"
+     crossorigin="anonymous"></script>
     <link rel="canonical" href="https://azardraw.com/">
     
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
 
-    <!-- Open Graph -->
+    <!-- Open Graph (Facebook / WhatsApp / LinkedIn) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://azardraw.com/">
     <meta property="og:title" content="AzarDraw - Tirage au Sort, Secret Santa & Tournois Gratuits">
@@ -26,7 +28,7 @@
     <meta property="og:image" content="https://images.unsplash.com/photo-1605218427306-022ba8c39f05?q=80&w=1200&h=630&auto=format&fit=crop">
     <meta property="og:site_name" content="AzarDraw">
 
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://azardraw.com/">
     <meta name="twitter:title" content="AzarDraw - Tirage au Sort & Tournois Gratuits">
@@ -144,8 +146,7 @@
     <main class="flex-1 relative w-full max-w-7xl mx-auto p-4 flex flex-col items-center min-h-[80vh]">
         <div class="fixed top-20 left-10 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl animate-pulse pointer-events-none" style="opacity: var(--blob-opacity)"></div>
         <div class="fixed bottom-20 right-10 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl animate-pulse pointer-events-none" style="opacity: var(--blob-opacity); animation-delay: 1s;"></div>
-        <div class="w-full max-w-3xl mx-auto mb-6 relative z-10 fade-in"><div class="ad-placeholder w-full h-24 rounded-xl flex flex-col items-center justify-center text-xs uppercase tracking-widest"><span class="mb-1 text-[10px] opacity-50" data-i18n="ad_label">Publicité</span><span data-i18n="ad_space">Espace Bannière (728x90)</span></div></div>
-
+        
         <section id="view-app" class="w-full max-w-3xl relative z-10 fade-in" style="animation-delay: 0.1s;">
             <div class="glass-panel md:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                 <div class="p-5 border-b border-white/10 text-center transition-colors" style="background-color: var(--secondary-bg)">
@@ -232,7 +233,6 @@
             </div>
         </section>
 
-        <div class="w-full max-w-3xl mx-auto mt-6 relative z-10 fade-in"><div class="ad-placeholder w-full h-24 rounded-xl flex flex-col items-center justify-center text-slate-500 text-xs uppercase tracking-widest"><span class="mb-1 text-[10px] opacity-50" data-i18n="ad_label">Publicité</span><span data-i18n="ad_space">Espace Bannière (728x90)</span></div></div>
     </main>
 
     <footer class="text-center p-6 text-muted-custom text-xs z-10 relative border-t border-white/5 mt-auto"><div class="flex justify-center items-center gap-4"><span data-i18n="footer_rights">&copy; 2025 AzarDraw.</span></div></footer>
@@ -1152,6 +1152,9 @@
         function launchConfetti() {
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#c084fc', '#db2777', '#fbbf24'] });
         }
+
+        // Initialize language
+        initLanguage();
     </script>
 </body>
 </html>
