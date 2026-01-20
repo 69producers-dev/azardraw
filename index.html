@@ -8,7 +8,7 @@
        OPTIMISATION SEO
     ========================================== -->
     <title>AzarDraw - Tirage au Sort Gratuit, Secret Santa & Tournois en Ligne</title>
-    <meta name="description" content="Le meilleur outil de tirage au sort gratuit et sans inscription. Désignez un gagnant (concours Instagram, TikTok, Facebook, LinkedIn, X), organisez un Secret Santa ou générez des arbres de tournoi en un clic.">
+    <meta name="description" content="Le meilleur outil de tirage au sort gratuit et sans inscription. Désignez un gagnant (concours Instagram), organisez un Secret Santa ou générez des arbres de tournoi en un clic.">
     <meta name="keywords" content="tirage au sort, générateur de hasard, secret santa, tournoi, équipes aléatoires, plouf plouf, concours instagram, main innocente, gratuit, sans inscription">
     <meta name="author" content="AzarDraw">
     <meta name="robots" content="index, follow">
@@ -147,6 +147,12 @@
         <div class="fixed top-20 left-10 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl animate-pulse pointer-events-none" style="opacity: var(--blob-opacity)"></div>
         <div class="fixed bottom-20 right-10 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl animate-pulse pointer-events-none" style="opacity: var(--blob-opacity); animation-delay: 1s;"></div>
         
+        <!-- INTRO HERO SECTION -->
+        <div class="text-center max-w-4xl mx-auto mb-10 mt-6 fade-in" id="hero-section">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight"><span class="gradient-text" data-i18n="hero_title">Le Tirage au Sort en Ligne, Simplifié.</span></h1>
+            <p class="text-lg text-muted-custom max-w-2xl mx-auto" data-i18n="hero_subtitle">AzarDraw est l'outil parfait pour vos concours, tournois et événements. Gratuit, sans inscription et 100% aléatoire.</p>
+        </div>
+
         <section id="view-app" class="w-full max-w-3xl relative z-10 fade-in" style="animation-delay: 0.1s;">
             <div class="glass-panel md:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                 <div class="p-5 border-b border-white/10 text-center transition-colors" style="background-color: var(--secondary-bg)">
@@ -173,23 +179,23 @@
                             <div class="flex flex-col gap-3">
                                 <button onclick="setMode('winner')" id="mode-winner" class="relative group mode-active p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-trophy text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_winner">Gagnant</span><span class="text-[10px] opacity-70" data-i18n="desc_winner">Tirage unique</span></div>
-                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_winner">Désigne un unique vainqueur au hasard.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_winner">Désigne un unique vainqueur au hasard.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('teams')" id="mode-teams" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-users text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_teams">Équipes</span><span class="text-[10px] opacity-70" data-i18n="desc_teams">Créer des groupes</span></div>
-                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_teams">Répartit aléatoirement les participants en groupes.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_teams">Répartit aléatoirement les participants en groupes.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('order')" id="mode-order" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-arrow-down-1-9 text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_order">Ordre</span><span class="text-[10px] opacity-70" data-i18n="desc_order">Mélanger la liste</span></div>
-                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_order">Mélange la liste pour définir un ordre de passage.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_order">Mélange la liste pour définir un ordre de passage.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('tournament')" id="mode-tournament" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-sitemap text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_tournament">Tournoi</span><span class="text-[10px] opacity-70" data-i18n="desc_tournament">Arbre de matchs</span></div>
-                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_tournament">Génère les matchs du premier tour (bracket).</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_tournament">Génère les matchs du premier tour (bracket).</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                                 <button onclick="setMode('santa')" id="mode-santa" class="relative group mode-inactive p-4 rounded-xl flex items-center gap-4 transition-all duration-200 text-left">
                                     <div class="w-10 h-10 rounded-full bg-current/10 flex items-center justify-center group-hover:bg-current/20 transition-colors"><i class="fa-solid fa-gifts text-lg"></i></div><div><span class="text-sm font-bold block" data-i18n="mode_santa">Secret Santa</span><span class="text-[10px] opacity-70" data-i18n="desc_santa">Échange de cadeaux</span></div>
-                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-36 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_santa">Assigne un destinataire secret à chaque participant.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
+                                    <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 bg-slate-800 text-white text-[10px] p-2 rounded-lg opacity-0 shadow-xl z-50 text-center font-normal leading-tight"><span data-i18n="tooltip_santa">Assigne un destinataire secret à chaque participant.</span><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div></div>
                                 </button>
                             </div>
                             <div id="options-teams" class="hidden mt-4 p-4 bg-white/5 rounded-xl border border-white/10 fade-in">
@@ -210,8 +216,44 @@
             </div>
         </section>
 
+        <!-- EXPLANATIONS SECTION (NEW) -->
+        <section class="w-full max-w-6xl mx-auto mt-16 mb-16 fade-in px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Winner Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col gap-3">
+                    <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 mb-2"><i class="fa-solid fa-trophy text-xl"></i></div>
+                    <h3 class="text-lg font-bold" data-i18n="mode_winner">Gagnant</h3>
+                    <p class="text-sm text-muted-custom flex-1" data-i18n="exp_winner">Désignez un vainqueur unique parmi une liste. Idéal pour les concours Instagram, TikTok ou Facebook.</p>
+                </div>
+                <!-- Teams Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col gap-3">
+                    <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 mb-2"><i class="fa-solid fa-users text-xl"></i></div>
+                    <h3 class="text-lg font-bold" data-i18n="mode_teams">Équipes</h3>
+                    <p class="text-sm text-muted-custom flex-1" data-i18n="exp_teams">Répartissez une liste de personnes en groupes équilibrés. Parfait pour les professeurs, le team building ou les jeux de société.</p>
+                </div>
+                <!-- Order Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col gap-3">
+                    <div class="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-2"><i class="fa-solid fa-arrow-down-1-9 text-xl"></i></div>
+                    <h3 class="text-lg font-bold" data-i18n="mode_order">Ordre</h3>
+                    <p class="text-sm text-muted-custom flex-1" data-i18n="exp_order">Mélangez une liste pour définir un ordre de passage aléatoire. Utile pour les oraux, les tours de parole ou les files d'attente.</p>
+                </div>
+                <!-- Tournament Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col gap-3">
+                    <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 mb-2"><i class="fa-solid fa-sitemap text-xl"></i></div>
+                    <h3 class="text-lg font-bold" data-i18n="mode_tournament">Tournoi</h3>
+                    <p class="text-sm text-muted-custom flex-1" data-i18n="exp_tournament">Générez un arbre de matchs (bracket) avec gestion des qualifications d'office. Indispensable pour vos tournois FIFA, Ping-Pong ou eSport.</p>
+                </div>
+                <!-- Santa Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col gap-3">
+                    <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 mb-2"><i class="fa-solid fa-gifts text-xl"></i></div>
+                    <h3 class="text-lg font-bold" data-i18n="mode_santa">Secret Santa</h3>
+                    <p class="text-sm text-muted-custom flex-1" data-i18n="exp_santa">Organisez votre Noël secret sans triche. Chacun se voit attribuer une personne à qui offrir un cadeau, sans jamais se tirer soi-même.</p>
+                </div>
+            </div>
+        </section>
+
         <section id="view-blog" class="w-full hidden fade-in relative z-10 flex-col" style="animation-delay: 0.1s;">
-            <div class="text-center mb-10"><h1 class="text-4xl md:text-5xl font-extrabold mb-4"><span class="gradient-text" data-i18n="blog_title">Le Blog AzarDraw</span></h1><p class="text-muted-custom max-w-2xl mx-auto" data-i18n="blog_subtitle">Astuces, guides et meilleures pratiques.</p></div>
+            <!-- En-tête du blog supprimé -->
             <div id="blog-loading" class="flex justify-center py-20"><div class="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div></div>
             <div id="blog-posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full pb-20 max-w-5xl mx-auto"></div>
         </section>
@@ -332,6 +374,11 @@
                         <div style="color: #fbcfe8; font-size: 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.4em; font-family: sans-serif; margin-top: 20px;">Le Vainqueur Est</div>
                         <h1 id="capture-winner" style="margin-top: 30px; font-size: 140px; font-weight: 900; color: #ffffff; text-shadow: 0 0 60px rgba(192, 132, 252, 0.6); font-family: sans-serif; line-height: 1.1;">Name</h1>
                      </div>
+
+                     <div id="capture-tournament-content" style="display:none; width: 90%; height: 70%;">
+                        <div id="capture-bracket-title" style="font-size: 40px; font-weight: bold; color: #000; margin-bottom: 20px;"></div>
+                        <div id="capture-bracket-container" style="display: flex; justify-content: space-around; height: 100%; align-items: flex-start; gap: 20px; padding-top: 40px;"></div>
+                     </div>
                 </div>
 
                 <div id="capture-decoration-line" style="width: 200px; height: 4px; background: linear-gradient(to right, transparent, #f472b6, transparent); margin-top: 20px;"></div>
@@ -370,7 +417,14 @@
                 option_full_bracket: "Arbre jusqu'à la finale", final: "Finale", semi_finals: "Demi-Finales", round_x: "Tour", round_1: "1er Tour",
                 tournament_bracket_title: "Tableau du Tournoi", winner_m: "Vainqueur M",
                 meta_description: "L'outil ultime pour vos tirages au sort. Désignez un gagnant, organisez un Secret Santa ou générez un arbre de tournoi gratuitement.",
-                meta_title: "AzarDraw - Tirage au Sort Gratuit, Secret Santa & Tournois en Ligne"
+                meta_title: "AzarDraw - Tirage au Sort Gratuit, Secret Santa & Tournois en Ligne",
+                hero_title: "Le Tirage au Sort en Ligne, Simplifié.",
+                hero_subtitle: "AzarDraw est l'outil parfait pour vos concours, tournois et événements. Gratuit, sans inscription et 100% aléatoire.",
+                exp_winner: "Désignez un vainqueur unique parmi une liste. Idéal pour les concours Instagram, TikTok ou Facebook.",
+                exp_teams: "Répartissez une liste de personnes en groupes équilibrés. Parfait pour les professeurs, le team building ou les jeux de société.",
+                exp_order: "Mélangez une liste pour définir un ordre de passage aléatoire. Utile pour les oraux, les tours de parole ou les files d'attente.",
+                exp_tournament: "Générez un arbre de matchs (bracket) avec gestion des qualifications d'office. Indispensable pour vos tournois FIFA, Ping-Pong ou eSport.",
+                exp_santa: "Organisez votre Noël secret sans triche. Chacun se voit attribuer une personne à qui offrir un cadeau, sans jamais se tirer soi-même."
             },
             en: {
                 nav_app: "App", nav_blog: "Blog", tool_title: "Random Picker", tool_subtitle: "Free, no signup, fair",
@@ -395,7 +449,14 @@
                 option_full_bracket: "Full bracket to final", final: "Final", semi_finals: "Semi-Finals", round_x: "Round", round_1: "Round 1",
                 tournament_bracket_title: "Tournament Bracket", winner_m: "Winner M",
                 meta_description: "The ultimate tool for random draws. Pick a winner, organize a Secret Santa, or generate a tournament bracket for free.",
-                meta_title: "AzarDraw - Free Random Picker, Secret Santa & Online Tournaments"
+                meta_title: "AzarDraw - Free Random Picker, Secret Santa & Online Tournaments",
+                hero_title: "The Simplest Online Random Picker.",
+                hero_subtitle: "AzarDraw is the perfect tool for your contests, tournaments, and events. Free, no registration, and 100% random.",
+                exp_winner: "Pick a single winner from a list. Ideal for Instagram, TikTok, or Facebook contests.",
+                exp_teams: "Split a list of people into balanced groups. Perfect for teachers, team building, or board games.",
+                exp_order: "Shuffle a list to define a random order. Useful for oral exams, speaking turns, or queues.",
+                exp_tournament: "Generate a match bracket with automatic bye management. Essential for your FIFA, Ping-Pong, or eSports tournaments.",
+                exp_santa: "Organize your Secret Santa without cheating. Everyone gets assigned someone to give a gift to, without ever drawing themselves."
             }
         };
 
@@ -530,41 +591,41 @@
                     category: "Practical Guide",
                     icon: "fa-solid fa-check-circle",
                     summary: "Discover AzarDraw, the simplest tool for your giveaways. No account, free, instant results.",
-                    content: `<p class="mb-4">Organizing a draw should be simple. With AzarDraw, paste your list, click, and you're done. Perfect for teachers or influencers.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Why use an online random generator?</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Total impartiality:</strong> Unlike a human, the algorithm favors no one. It's mathematical.</li><li><strong>Transparency:</strong> You can record your screen to prove to your community that the result is authentic.</li><li><strong>Speed:</strong> Copy your Excel or text list, paste it, and get the result in less than 3 seconds.</li></ul>`
+                    content: `<p class="mb-4">Organizing a draw should be simple. With AzarDraw, paste your list, click, and you're done. Perfect for teachers or influencers.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Why use an online random generator?</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Total impartiality:</strong> Unlike a human, the algorithm favors no one. It's mathematical.</li><li><strong>Transparency:</strong> You can record your screen to prove to your community that the result is authentic.</li><li><strong>Speed:</strong> Copy your Excel or text list, paste it, and get the result in less than 3 seconds.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">3 Frequent Use Cases</h3><ol class="list-decimal pl-5 space-y-2 mb-4"><li><strong>For Teachers:</strong> Pick a student at random to go to the board without being accused of favoritism.</li><li><strong>For Managers:</strong> Assign ungrateful tasks or on-call duties in a fun and fair way.</li><li><strong>For Creators (Instagram/TikTok):</strong> Select a winner among your exported comments for your contests.</li></ol>`
                 },
                 {
-                    title: "Organize a Secret Santa online",
-                    category: "Inspiration",
+                    title: "Organizing an Online Secret Santa: The Complete Guide",
+                    category: "Ideas & Inspiration",
                     icon: "fa-solid fa-gifts",
                     summary: "No more lost papers! Use our Secret Santa mode for your gift exchanges.",
-                    content: `<p class="mb-4"><strong>Secret Santa</strong> has become the essential tradition of end-of-year celebrations. But logistical organization can quickly become a nightmare.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How does our algorithm work?</h3><p class="mb-4">AzarDraw uses a simplified "closed cycle" algorithm to ensure that:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li>No one draws themselves (mathematically impossible).</li><li>There are no isolated subgroups (A gives to B, and B gives to A). Instead, we create a large chain: A ➔ B ➔ C ➔ D ➔ A.</li><li>Everyone receives exactly one gift.</li></ul>`
+                    content: `<p class="mb-4"><strong>Secret Santa</strong> has become the essential tradition of end-of-year celebrations. But logistical organization can quickly become a nightmare.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How does our algorithm work?</h3><p class="mb-4">AzarDraw uses a simplified "closed cycle" algorithm to ensure that:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li>No one draws themselves (mathematically impossible).</li><li>There are no isolated subgroups (A gives to B, and B gives to A). Instead, we create a large chain: A ➔ B ➔ C ➔ D ➔ A.</li><li>Everyone receives exactly one gift.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">Golden rules for a successful exchange</h3><div class="bg-white/5 p-4 rounded-lg mb-4"><p><strong>1. Set a budget:</strong> Agree on a max amount so no one feels cheated.</p><p class="mt-2"><strong>2. The Theme:</strong> Impose a theme to stimulate creativity.</p><p class="mt-2"><strong>3. The Reveal:</strong> Use our "Secret Santa" mode on a single phone passed from hand to hand.</p></div>`
                 },
                 {
-                    title: "Tournaments: Generate your brackets",
-                    category: "Tools",
+                    title: "Tournament Generator: Create your brackets easily",
+                    category: "Tools & Tech",
                     icon: "fa-solid fa-sitemap",
                     summary: "For gaming or sports, create your tournament brackets instantly.",
-                    content: `<p class="mb-4">Organizing an impromptu tournament often ends with scribbled papers. Whether you're organizing a <strong>FIFA</strong> night or an office <strong>Ping-Pong</strong> tournament, structure is key.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How to handle odd numbers?</h3><p class="mb-4">Our algorithm automatically manages <strong>"Byes"</strong> (automatic qualifications). If the number of participants is odd, the system draws a lucky player who will go directly to the next round without playing.</p>`
+                    content: `<p class="mb-4">Organizing an impromptu tournament often ends with scribbled papers. Whether you're organizing a <strong>FIFA</strong> night or an office <strong>Ping-Pong</strong> tournament, structure is key.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">How to handle odd numbers?</h3><p class="mb-4">Our algorithm automatically manages <strong>"Byes"</strong> (automatic qualifications). If the number of participants is odd, the system draws a lucky player who will go directly to the next round without playing.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Example of generated structure</h3><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Match 1:</strong> Player A <span class="text-pink-400 font-bold">VS</span> Player B</li><li><strong>Match 2:</strong> Player C <span class="text-pink-400 font-bold">VS</span> Player D</li><li><strong>Qualified:</strong> Player E (awaits winner of match 1)</li></ul><p>Use AzarDraw's <strong>"Tournament"</strong> mode to generate these pairings in a second!</p>`
                 },
                 {
                     title: "Online Random Picker: The tool to pick a volunteer",
-                    category: "Inspiration",
+                    category: "Ideas & Inspiration",
                     icon: "fa-solid fa-hand-point-up",
                     summary: "Who does the dishes? Who starts the presentation? Let chance decide without arguments.",
-                    content: `<p class="mb-4">The digital "Eeny Meeny Miny Moe" is the essential tool for community life. Sometimes you have to make an arbitrary decision.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">When to use the single draw?</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-purple-300">At Work 💼</h4><p class="text-sm opacity-80">Who presents the PowerPoint? Who gets the coffee?</p></div><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-pink-300">At Home 🏠</h4><p class="text-sm opacity-80">Who takes out the trash? Who chooses the movie tonight?</p></div></div>`
+                    content: `<p class="mb-4">The digital "Eeny Meeny Miny Moe" is the essential tool for community life. Sometimes you have to make an arbitrary decision.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">When to use the single draw?</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-purple-300">At Work 💼</h4><p class="text-sm opacity-80">Who presents the PowerPoint? Who gets the coffee?</p></div><div class="bg-white/5 p-3 rounded"><h4 class="font-bold text-pink-300">At Home 🏠</h4><p class="text-sm opacity-80">Who takes out the trash? Who chooses the movie tonight?</p></div></div><p class="mb-4">The advantage of using <strong>AzarDraw</strong> is the indisputability of the result.</p>`
                 },
                 {
                     title: "How to draw balanced teams?",
                     category: "Practical Guide",
                     icon: "fa-solid fa-users",
                     summary: "Split your friends or colleagues into equal groups in seconds.",
-                    content: `<p class="mb-4">Building teams is often a delicate moment. Letting participants choose themselves often leads to imbalances.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Ideal for Team Building and Education</h3><p class="mb-4">Our random team generator is particularly popular for:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Teachers:</strong> To create heterogeneous work pairs.</li><li><strong>Hackathons:</strong> To mix skills randomly.</li><li><strong>Board Games:</strong> To define teams without couples always being together.</li></ul>`
+                    content: `<p class="mb-4">Building teams is often a delicate moment. Letting participants choose themselves often leads to imbalances.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">Ideal for Team Building and Education</h3><p class="mb-4">Our random team generator is particularly popular for:</p><ul class="list-disc pl-5 space-y-2 mb-4"><li><strong>Teachers:</strong> To create heterogeneous work pairs.</li><li><strong>Hackathons:</strong> To mix skills randomly.</li><li><strong>Board Games:</strong> To define teams without couples always being together.</li></ul><h3 class="text-xl font-bold text-white mt-6 mb-3">How does it work?</h3><p>Simply enter the complete list of participants. Choose the desired <strong>number of groups</strong>. The algorithm will mathematically distribute people so that groups are of equal size.</p>`
                 },
                 {
-                    title: "Influencers: Succeed with Instagram Contests",
+                    title: "Influencers: The Ultimate Guide for your Contests",
                     category: "Practical Guide",
                     icon: "fa-solid fa-star",
-                    summary: "Golden rules to organize a legal, viral, and safe giveaway.",
+                    summary: "Want to grow your community without risking a shadowban? Here are the golden rules.",
                     content: `<p class="mb-4">Contests are the #1 growth lever. But be careful, platforms have strict rules.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">1. Transparency</h3><p class="mb-4">Never do a draw "in secret". Use a third-party tool like <strong>AzarDraw</strong> and record your screen.</p><h3 class="text-xl font-bold text-white mt-6 mb-3">2. Mandatory Legal Mentions</h3><p class="mb-4">You MUST include: "This contest is not managed or sponsored by the platform."</p><h3 class="text-xl font-bold text-white mt-6 mb-3">3. The Winning Mechanic</h3><p>Avoid overly complex mechanics. The perfect combo: <strong>Like + Tag 2 friends + Follow</strong>.</p>`
                 },
                 {
@@ -598,10 +659,10 @@
             ]
         };
 
-        // ... (Keep renderBlog and rest of logic) ...
         function renderBlog() {
             const container = document.getElementById('blog-posts-container');
             const loading = document.getElementById('blog-loading');
+            
             if (container) {
                 container.innerHTML = '';
                 const articles = blogData[currentLang] || blogData['fr']; // Fallback
@@ -679,8 +740,10 @@
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
-            document.getElementById('icon-sun').classList.toggle('hidden', !isLight);
-            document.getElementById('icon-moon').classList.toggle('hidden', isLight);
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+            if (iconSun) iconSun.classList.toggle('hidden', !isLight);
+            if (iconMoon) iconMoon.classList.toggle('hidden', isLight);
         }
 
         let state = { mode: 'winner', groups: 2, isDrawing: false, tournamentData: null };
@@ -693,43 +756,73 @@
             fileInput: document.getElementById('file-input')
         };
         
-        let customLogoDataUrl = null;
-
         function setView(viewName) {
-            document.getElementById('view-app').classList.add('hidden');
-            document.getElementById('view-blog').classList.add('hidden');
-            document.getElementById('nav-app').classList.remove('active');
-            document.getElementById('nav-blog').classList.remove('active');
+            const app = document.getElementById('view-app');
+            const blog = document.getElementById('view-blog');
+            const navApp = document.getElementById('nav-app');
+            const navBlog = document.getElementById('nav-blog');
+
+            if (app) app.classList.add('hidden');
+            if (blog) blog.classList.add('hidden');
+            if (navApp) navApp.classList.remove('active');
+            if (navBlog) navBlog.classList.remove('active');
+
             if (viewName === 'app') {
-                document.getElementById('view-app').classList.remove('hidden');
-                document.getElementById('nav-app').classList.add('active');
+                if (app) app.classList.remove('hidden');
+                if (navApp) navApp.classList.add('active');
             } else {
-                document.getElementById('view-blog').classList.remove('hidden');
-                document.getElementById('view-blog').classList.add('flex');
-                document.getElementById('nav-blog').classList.add('active');
+                if (blog) {
+                    blog.classList.remove('hidden');
+                    blog.classList.add('flex');
+                }
+                if (navBlog) navBlog.classList.add('active');
             }
         }
+
         function toggleAdmin() {
-            if (document.getElementById('view-admin').classList.contains('hidden')) setView('admin');
+            const admin = document.getElementById('view-admin');
+            if (admin && admin.classList.contains('hidden')) setView('admin');
             else setView('blog');
         }
 
-        DOM.manualInput.addEventListener('input', updateCount);
-        function updateCount() {
-            const lines = DOM.manualInput.value.split('\n').filter(l => l.trim() !== '');
-            DOM.manualCount.innerText = `${lines.length} participants`;
+        if (DOM.manualInput) {
+            DOM.manualInput.addEventListener('input', updateCount);
         }
-        function clearInput() { DOM.manualInput.value = ''; updateCount(); }
-        function importFile() { DOM.fileInput.click(); }
+
+        function updateCount() {
+            const input = document.getElementById('manual-input');
+            const count = document.getElementById('count-manual');
+            if (input && count) {
+                const lines = input.value.split('\n').filter(l => l.trim() !== '');
+                count.innerText = `${lines.length} participants`;
+            }
+        }
+
+        function clearInput() {
+            const input = document.getElementById('manual-input');
+            if (input) {
+                input.value = '';
+                updateCount();
+            }
+        }
+
+        function importFile() {
+            const input = document.getElementById('file-input');
+            if (input) input.click();
+        }
+
         function handleFileImport(input) {
             const file = input.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
-                let text = e.target.result;
-                if (text.includes(',') && !text.includes('\n')) text = text.replace(/,/g, '\n');
-                DOM.manualInput.value += (DOM.manualInput.value ? '\n' : '') + text;
-                updateCount();
+                const manual = document.getElementById('manual-input');
+                if (manual) {
+                    let text = e.target.result;
+                    if (text.includes(',') && !text.includes('\n')) text = text.replace(/,/g, '\n');
+                    manual.value += (manual.value ? '\n' : '') + text;
+                    updateCount();
+                }
                 input.value = '';
             };
             reader.readAsText(file);
@@ -739,64 +832,74 @@
             state.mode = mode;
             ['winner', 'teams', 'order', 'tournament', 'santa'].forEach(m => {
                 const btn = document.getElementById(`mode-${m}`);
-                if (m === mode) {
-                    btn.classList.remove('mode-inactive');
-                    btn.classList.add('mode-active');
-                } else {
-                    btn.classList.add('mode-inactive');
-                    btn.classList.remove('mode-active');
+                if (btn) {
+                    if (m === mode) {
+                        btn.classList.remove('mode-inactive', 'bg-white/5', 'opacity-70');
+                        btn.classList.add('mode-active');
+                    } else {
+                        btn.classList.add('mode-inactive', 'bg-white/5', 'opacity-70');
+                        btn.classList.remove('mode-active');
+                    }
                 }
             });
-            document.getElementById('options-teams').classList.toggle('hidden', mode !== 'teams');
-            document.getElementById('options-tournament').classList.toggle('hidden', mode !== 'tournament');
+            const optTeams = document.getElementById('options-teams');
+            const optTourn = document.getElementById('options-tournament');
+            if (optTeams) optTeams.classList.toggle('hidden', mode !== 'teams');
+            if (optTourn) optTourn.classList.toggle('hidden', mode !== 'tournament');
         }
 
         function adjustGroups(delta) {
-            let newCount = state.groups + delta;
-            if (newCount < 2) newCount = 2;
-            state.groups = newCount;
-            document.getElementById('group-count').innerText = state.groups;
+            state.groups = Math.max(2, state.groups + delta);
+            const count = document.getElementById('group-count');
+            if (count) count.innerText = state.groups;
         }
 
         function startDraw() {
-            const list = DOM.manualInput.value.split('\n').filter(l => l.trim() !== '').map(l => l.trim());
+            const input = document.getElementById('manual-input');
+            if (!input) return;
+            const list = input.value.split('\n').filter(l => l.trim() !== '').map(l => l.trim());
             const alertMsg = currentLang === 'fr' ? "Ajoutez au moins 2 participants !" : "Add at least 2 participants!";
             if (list.length < 2) return alert(alertMsg);
 
             state.isDrawing = true;
-            DOM.resultOverlay.classList.remove('hidden');
-            void DOM.resultOverlay.offsetWidth;
-            DOM.resultOverlay.classList.remove('opacity-0');
-            ['result-winner','result-list','result-actions','result-share','result-article'].forEach(id => document.getElementById(id).classList.add('hidden'));
-            
-            // UI Toggle for Image Gen buttons
-            if (state.mode === 'winner') {
-                document.getElementById('image-gen-section').classList.add('hidden'); // Initially hidden
-                document.getElementById('custom-inputs-winner').classList.remove('hidden');
-                document.getElementById('custom-inputs-tournament').classList.add('hidden');
-            } else if (state.mode === 'tournament') {
-                // Tournament image gen disabled per user request
-                 document.getElementById('image-gen-section').classList.add('hidden');
-            } else {
-                 document.getElementById('image-gen-section').classList.add('hidden');
+            const overlay = document.getElementById('result-overlay');
+            if (overlay) {
+                overlay.classList.remove('hidden');
+                void overlay.offsetWidth;
+                overlay.classList.remove('opacity-0');
             }
 
+            ['result-winner','result-list','result-actions','result-share','result-article'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+            
+            const loading = document.getElementById('result-loading');
+            if (loading) loading.classList.remove('hidden');
+
             if (state.mode === 'winner') {
-                document.getElementById('result-winner').classList.remove('hidden');
-                runWinnerAnimation(list);
+                const winner = document.getElementById('result-winner');
+                if (winner) {
+                    setTimeout(() => {
+                        if (loading) loading.classList.add('hidden');
+                        winner.classList.remove('hidden');
+                        runWinnerAnimation(list);
+                    }, 500);
+                }
             } else {
-                document.getElementById('result-loading').classList.remove('hidden');
                 setTimeout(() => {
-                    document.getElementById('result-loading').classList.add('hidden');
-                    document.getElementById('result-list').classList.remove('hidden');
-                    document.getElementById('result-actions').classList.remove('hidden');
-                    document.getElementById('result-share').classList.remove('hidden');
+                    if (loading) loading.classList.add('hidden');
+                    const actions = document.getElementById('result-actions');
+                    const share = document.getElementById('result-share');
+                    const imgSec = document.getElementById('image-gen-section');
                     
-                    // Show Image Gen ONLY for Winner 
+                    if (actions) actions.classList.remove('hidden');
+                    if (share) share.classList.remove('hidden');
+                    
                     if (state.mode === 'winner') {
-                        document.getElementById('image-gen-section').classList.remove('hidden');
+                        if (imgSec) imgSec.classList.remove('hidden');
                     } else {
-                        document.getElementById('image-gen-section').classList.add('hidden');
+                        if (imgSec) imgSec.classList.add('hidden');
                     }
                     
                     if (state.mode === 'santa') playSanta();
@@ -806,6 +909,9 @@
                     if (state.mode === 'order') generateOrder(list);
                     if (state.mode === 'tournament') generateTournament(list);
                     if (state.mode === 'santa') generateSanta(list);
+                    
+                    const listResult = document.getElementById('result-list');
+                    if (listResult) listResult.classList.remove('hidden');
                 }, 1500);
             }
         }
@@ -814,19 +920,24 @@
             let startTime = null;
             let lastUpdate = 0;
             const duration = 10000; 
-            DOM.winnerName.style.transition = 'none';
-            DOM.winnerName.style.transform = 'scale(1)';
+            const nameEl = document.getElementById('winner-name');
+            if (!nameEl) return;
+
+            nameEl.style.transition = 'none';
+            nameEl.style.transform = 'scale(1)';
+
             function animate(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const runtime = timestamp - startTime;
                 const progress = Math.min(runtime / duration, 1);
                 const interval = 50 + (800 * Math.pow(progress, 3));
+
                 if (timestamp - lastUpdate > interval) {
                     lastUpdate = timestamp;
                     if (progress < 1) {
                         const randomName = list[Math.floor(Math.random() * list.length)];
-                        DOM.winnerName.innerText = randomName;
-                        DOM.winnerName.style.transform = `scale(${0.98 + Math.random() * 0.04})`;
+                        nameEl.innerText = randomName;
+                        nameEl.style.transform = `scale(${0.98 + Math.random() * 0.04})`;
                         playTick(); 
                     }
                 }
@@ -834,14 +945,18 @@
                     requestAnimationFrame(animate);
                 } else {
                     const finalWinner = list[Math.floor(Math.random() * list.length)];
-                    DOM.winnerName.innerText = finalWinner;
-                    DOM.winnerName.style.transition = "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)";
-                    DOM.winnerName.style.transform = 'scale(1.5)'; 
-                    setTimeout(() => DOM.winnerName.style.transform = 'scale(1)', 600);
-                    document.getElementById('result-actions').classList.remove('hidden');
-                    document.getElementById('result-share').classList.remove('hidden');
-                    const imgGenSec = document.getElementById('image-gen-section');
-                    if(imgGenSec) imgGenSec.classList.remove('hidden'); 
+                    nameEl.innerText = finalWinner;
+                    nameEl.style.transition = "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)";
+                    nameEl.style.transform = 'scale(1.5)'; 
+                    setTimeout(() => nameEl.style.transform = 'scale(1)', 600);
+                    
+                    const actions = document.getElementById('result-actions');
+                    const share = document.getElementById('result-share');
+                    const imgSec = document.getElementById('image-gen-section');
+                    if (actions) actions.classList.remove('hidden');
+                    if (share) share.classList.remove('hidden');
+                    if (imgSec) imgSec.classList.remove('hidden'); 
+
                     launchConfetti();
                     playWin(); 
                 }
@@ -850,42 +965,26 @@
         }
 
         function generateTeams(list) {
-            const container = DOM.listContainer;
+            const container = document.getElementById('list-container');
+            if (!container) return;
             container.innerHTML = '';
             let shuffled = [...list].sort(() => Math.random() - 0.5);
             let teams = Array.from({length: state.groups}, () => []);
             shuffled.forEach((p, i) => teams[i % state.groups].push(p));
-            teams.forEach((team, i) => {
+            teams.forEach((t, i) => {
                 const card = document.createElement('div');
-                card.className = "glass-card p-4 rounded-xl fade-in mb-3";
-                let members = team.map(m => `<div class="py-1 border-b border-white/5 last:border-0 opacity-80 text-sm"><i class="fa-solid fa-user-tag text-xs mr-2 text-purple-400"></i>${m}</div>`).join('');
-                card.innerHTML = `<div class="font-bold text-pink-500 mb-2 flex items-center"><span class="bg-pink-500/20 px-2 py-0.5 rounded text-xs mr-2">Groupe ${i+1}</span> <span class="text-xs opacity-60 ml-auto">${team.length} pers.</span></div><div class="pl-1">${members}</div>`;
+                card.className = "glass-card p-4 rounded-xl border border-white/10";
+                card.innerHTML = `<div class="font-bold text-pink-500 mb-1">Groupe ${i+1}</div><div class="text-sm opacity-80">${t.join(', ')}</div>`;
                 container.appendChild(card);
             });
-            document.getElementById('list-title').innerText = translations[currentLang]['result_teams_title'] || "Équipes Formées";
-            launchConfetti();
-        }
-
-        function generateOrder(list) {
-            const container = DOM.listContainer;
-            container.innerHTML = '';
-            let shuffled = [...list].sort(() => Math.random() - 0.5);
-            shuffled.forEach((p, i) => {
-                const row = document.createElement('div');
-                row.className = "flex items-center bg-white/5 p-3 rounded-lg mb-2 fade-in border border-white/5";
-                let bg = i===0?"bg-yellow-500 text-black":i===1?"bg-slate-300 text-black":i===2?"bg-amber-700 text-white":"bg-slate-700 text-slate-300";
-                row.innerHTML = `<div class="w-8 h-8 ${bg} rounded-full flex items-center justify-center font-bold text-sm mr-3 shadow-lg">${i+1}</div><div class="font-medium opacity-90">${p}</div>`;
-                container.appendChild(row);
-            });
-            document.getElementById('list-title').innerText = translations[currentLang]['result_order_title'] || "Ordre de Passage";
         }
 
         function generateTournament(list) {
-            const container = DOM.listContainer;
+            const container = document.getElementById('list-container');
+            if (!container) return;
             container.innerHTML = '';
-            const fullBracket = document.getElementById('tournament-full').checked;
-            let shuffled = [...list].sort(() => Math.random() - 0.5);
             
+            let shuffled = [...list].sort(() => Math.random() - 0.5);
             let globalMatchId = 1;
             let nextRoundParticipants = []; 
             let roundsData = []; 
@@ -906,31 +1005,11 @@
                 nextRoundParticipants.push(bye); 
             }
             
-            // Display Round 1
-            const roundTitle = document.createElement('div');
-            roundTitle.className = "text-xs font-bold text-pink-500 uppercase tracking-widest mb-3 mt-2";
-            roundTitle.innerText = translations[currentLang]['round_1'] || "1er Tour";
-            container.appendChild(roundTitle);
-
-            round1Matches.forEach(m => {
-                const row = document.createElement('div');
-                row.className = "flex items-center justify-between bg-white/5 p-4 rounded-lg mb-2 fade-in border border-white/5 relative overflow-hidden group hover:border-pink-500/30 transition-colors";
-                const badge = `<div class="absolute top-1 left-2 text-[8px] uppercase font-bold text-yellow-400 tracking-wider bg-black/50 px-1 rounded">Match ${m.id}</div>`;
-                const vs = document.createElement('div');
-                vs.className = "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-lg z-10 border-2 border-slate-900";
-                vs.innerText = "VS";
-                row.innerHTML = `${badge}<div class="flex-1 text-center pr-4 font-bold opacity-90 pt-2">${m.p1}</div>${vs.outerHTML}<div class="flex-1 text-center pl-4 font-bold opacity-90 pt-2">${m.p2}</div>`;
-                container.appendChild(row);
-            });
-
-            if (bye) {
-                const row = document.createElement('div');
-                row.className = "flex items-center justify-center bg-white/5 p-4 rounded-lg mb-2 fade-in border border-white/5 border-dashed opacity-70";
-                row.innerHTML = `<span class="text-xs text-muted-custom mr-2">Qualifié d'office :</span> <span class="font-bold opacity-90">${bye}</span>`;
-                container.appendChild(row);
-            }
+            roundsData.push({ title: translations[currentLang]['round_1'] || "1er Tour", matches: round1Matches, bye });
 
             // --- SUBSEQUENT ROUNDS ---
+            const fullBracket = document.getElementById('tournament-full') ? document.getElementById('tournament-full').checked : false;
+
             if (fullBracket && nextRoundParticipants.length > 1) {
                 let roundNum = 2;
                 while (nextRoundParticipants.length > 1) {
@@ -960,7 +1039,7 @@
                 }
             }
 
-            state.tournamentData = roundsData; // Save for image gen
+            state.tournamentData = roundsData;
 
             // RENDER TO DOM
             roundsData.forEach((round, index) => {
@@ -987,11 +1066,30 @@
                     container.appendChild(row);
                 }
             });
-            document.getElementById('list-title').innerText = translations[currentLang]['result_tournament_title'] || "Tableau du Tournoi";
+
+            const title = document.getElementById('list-title');
+            if (title) title.innerText = translations[currentLang]['tournament_bracket_title'] || "Tableau du Tournoi";
+        }
+
+        function generateOrder(list) {
+            const container = document.getElementById('list-container');
+            if (!container) return;
+            container.innerHTML = '';
+            let shuffled = [...list].sort(() => Math.random() - 0.5);
+            shuffled.forEach((p, i) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center bg-white/5 p-3 rounded-lg mb-2 fade-in border border-white/5";
+                let bg = i===0?"bg-yellow-500 text-black":i===1?"bg-slate-300 text-black":i===2?"bg-amber-700 text-white":"bg-slate-700 text-slate-300";
+                row.innerHTML = `<div class="w-8 h-8 ${bg} rounded-full flex items-center justify-center font-bold text-sm mr-3 shadow-lg">${i+1}</div><div class="font-medium opacity-90">${p}</div>`;
+                container.appendChild(row);
+            });
+            const title = document.getElementById('list-title');
+            if (title) title.innerText = translations[currentLang]['result_order_title'] || "Ordre de Passage";
         }
 
         function generateSanta(list) {
-            const container = DOM.listContainer;
+            const container = document.getElementById('list-container');
+            if (!container) return;
             container.innerHTML = '';
             let shuffled = [...list];
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1008,33 +1106,44 @@
                     </div>
                     <div class="flex-1 text-right relative min-w-[120px]">
                         <span class="hidden-content font-mono text-pink-300">👉 ${receiver}</span>
-                        <div class="reveal-text">CLIQUEZ</div>
+                        <div class="reveal-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-bold bg-black/60 px-2 py-1 rounded cursor-pointer">CLIQUEZ</div>
                     </div>
                 `;
-                card.addEventListener('click', function() { this.classList.toggle('revealed'); });
+                card.addEventListener('click', function() { 
+                    this.classList.toggle('revealed');
+                    const txt = this.querySelector('.reveal-text');
+                    if (txt) txt.style.display = this.classList.contains('revealed') ? 'none' : 'block';
+                });
                 container.appendChild(card);
             });
-            document.getElementById('list-title').innerText = translations[currentLang]['result_santa_title'] || "Secret Santa 🎅";
+            const title = document.getElementById('list-title');
+            if (title) title.innerText = translations[currentLang]['result_santa_title'] || "Secret Santa 🎅";
         }
 
         function closeResult() {
-            DOM.resultOverlay.classList.add('opacity-0');
-            setTimeout(() => {
-                DOM.resultOverlay.classList.add('hidden');
-                ['result-winner','result-list','result-actions','result-share','result-article'].forEach(id => document.getElementById(id).classList.add('hidden'));
-            }, 300);
+            const overlay = document.getElementById('result-overlay');
+            if (overlay) {
+                overlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    ['result-winner','result-list','result-actions','result-share','result-article'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.classList.add('hidden');
+                    });
+                }, 300);
+            }
             state.isDrawing = false;
         }
 
         window.getResultText = () => {
-            let text = "";
+            const nameEl = document.getElementById('winner-name');
+            const winner = nameEl ? nameEl.innerText : "...";
             const url = window.location.href;
-            if (state.mode === 'winner') text = `🏆 Le gagnant est : ${DOM.winnerName.innerText} ! \nTirage effectué sur AzarDraw 🎲 ${url}`;
-            else if (state.mode === 'teams') text = "📋 Équipes générées sur AzarDraw 🎲 : " + url;
-            else if (state.mode === 'tournament') text = "⚔️ Matchs générés sur AzarDraw 🎲 : " + url;
-            else if (state.mode === 'santa') text = "🎅 Secret Santa organisé sur AzarDraw 🎲 : " + url;
-            else text = "🔢 Ordre de passage généré sur AzarDraw 🎲 : " + url;
-            return text;
+            if (state.mode === 'winner') return `🏆 AzarDraw a parlé ! Le vainqueur est : ${winner} ! \nTirage effectué sur AzarDraw 🎲 ${url}`;
+            else if (state.mode === 'teams') return "📋 Équipes générées sur AzarDraw 🎲 : " + url;
+            else if (state.mode === 'tournament') return "⚔️ Matchs générés sur AzarDraw 🎲 : " + url;
+            else if (state.mode === 'santa') return "🎅 Secret Santa organisé sur AzarDraw 🎲 : " + url;
+            return "🔢 Tirage au sort effectué sur AzarDraw 🎲 : " + url;
         };
 
         window.shareSocial = (platform) => {
@@ -1042,15 +1151,12 @@
             const url = encodeURIComponent(window.location.href);
             const encodedText = encodeURIComponent(text);
             const toastMsg = currentLang === 'fr' ? "Texte copié ! Ouvrez l'app pour coller." : "Text copied! Open the app to paste.";
-            if (['instagram','tiktok','youtube'].includes(platform)) {
-                window.copyToClipboard(text);
-                window.showToast(toastMsg);
-            } else if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${encodedText}`);
+            if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${encodedText}`);
             else if (platform === 'whatsapp') window.open(`https://api.whatsapp.com/send?text=${encodedText}`);
             else if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
             else if (platform === 'linkedin') window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
             else if (platform === 'reddit') window.open(`https://www.reddit.com/submit?url=${url}&title=${encodedText}`);
-            else if (platform === 'email') window.open(`mailto:?subject=Luckify&body=${encodedText}`);
+            else if (platform === 'email') window.open(`mailto:?subject=AzarDraw&body=${encodedText}`);
         };
         
         window.copyToClipboard = (text) => {
@@ -1064,9 +1170,11 @@
 
         window.showToast = (msg) => {
             const toast = document.getElementById('share-toast');
-            toast.innerText = msg;
-            toast.classList.remove('opacity-0');
-            setTimeout(() => toast.classList.add('opacity-0'), 2000);
+            if (toast) {
+                toast.innerText = msg;
+                toast.classList.remove('opacity-0');
+                setTimeout(() => toast.classList.add('opacity-0'), 2000);
+            }
         };
         
         window.copyResults = () => {
@@ -1075,48 +1183,59 @@
         };
         
         window.openArticle = (category, title, contentHTML) => {
-            document.getElementById('article-category').innerText = category;
-            document.getElementById('article-title').innerText = title;
-            document.getElementById('article-body').innerHTML = contentHTML;
+            const catEl = document.getElementById('article-category');
+            const titleEl = document.getElementById('article-title');
+            const bodyEl = document.getElementById('article-body');
+            if (catEl) catEl.innerText = category;
+            if (titleEl) titleEl.innerText = title;
+            if (bodyEl) bodyEl.innerHTML = contentHTML;
+
             const overlay = document.getElementById('result-overlay');
-            overlay.classList.remove('hidden');
-            ['result-loading','result-winner','result-list','result-actions','result-share','image-gen-section'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) el.classList.add('hidden');
-            });
-            document.getElementById('result-article').classList.remove('hidden');
-            void overlay.offsetWidth;
-            overlay.classList.remove('opacity-0');
+            if (overlay) {
+                overlay.classList.remove('hidden');
+                ['result-loading','result-winner','result-list','result-actions','result-share','image-gen-section'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.classList.add('hidden');
+                });
+                const art = document.getElementById('result-article');
+                if (art) art.classList.remove('hidden');
+                void overlay.offsetWidth;
+                overlay.classList.remove('opacity-0');
+            }
         };
 
         window.generateImage = (format) => {
             if (state.mode !== 'winner') return alert("La génération d'image n'est disponible que pour le mode 'Gagnant'.");
             
             const template = document.getElementById('capture-template');
-            
-            // Only Winner Content
-            document.getElementById('capture-winner').innerText = document.getElementById('winner-name').innerText;
-            
-            const customTitle = document.getElementById('custom-title-input').value;
-            const contestEl = document.getElementById('capture-contest-name');
-            if (customTitle) { contestEl.innerText = customTitle; contestEl.style.display = 'block'; }
-            else { contestEl.style.display = 'none'; }
-            
-            const customFooter = document.getElementById('custom-footer-input').value;
-            if (customFooter) document.querySelector('#capture-footer').innerText = customFooter;
-            else document.querySelector('#capture-footer').innerText = translations[currentLang]['tool_subtitle'] || "Gratuit, sans inscription et impartial";
+            if (!template) return;
 
+            const nameEl = document.getElementById('winner-name');
+            const capWinner = document.getElementById('capture-winner-name');
+            if (nameEl && capWinner) capWinner.innerText = nameEl.innerText;
+            
+            const titleIn = document.getElementById('custom-title-input');
+            const capContest = document.getElementById('capture-contest-name');
+            if (titleIn && capContest) {
+                if (titleIn.value) {
+                    capContest.innerText = titleIn.value;
+                    capContest.style.display = 'block';
+                } else {
+                    capContest.style.display = 'none';
+                }
+            }
+            
             if (format === 'story') {
                 template.style.width = '1080px';
                 template.style.height = '1920px';
-                document.querySelector('#capture-winner').style.fontSize = '120px';
+                capWinner.style.fontSize = '120px';
             } else { 
                 template.style.width = '1080px';
                 template.style.height = '1080px';
-                document.querySelector('#capture-winner').style.fontSize = '130px';
+                capWinner.style.fontSize = '130px';
             }
             
-            html2canvas(template, { scale: 1, backgroundColor: null, useCORS: true }).then(canvas => {
+            html2canvas(template).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `azardraw-result-${format}.png`;
                 link.href = canvas.toDataURL("image/png");
@@ -1130,20 +1249,23 @@
         // --- COOKIE LOGIC ---
         function checkCookies() {
             const consent = localStorage.getItem('cookieConsent');
-            if (!consent) {
-                document.getElementById('cookie-banner').style.display = 'flex';
+            const banner = document.getElementById('cookie-banner');
+            if (!consent && banner) {
+                banner.style.display = 'flex';
             } else if (consent === 'accepted') {
                 loadAds();
             }
         }
         window.acceptCookies = () => {
             localStorage.setItem('cookieConsent', 'accepted');
-            document.getElementById('cookie-banner').style.display = 'none';
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.style.display = 'none';
             loadAds();
         };
         window.refuseCookies = () => {
             localStorage.setItem('cookieConsent', 'refused');
-            document.getElementById('cookie-banner').style.display = 'none';
+            const banner = document.getElementById('cookie-banner');
+            if (banner) banner.style.display = 'none';
         };
         function loadAds() {
             console.log("Ads loading enabled");
@@ -1153,8 +1275,11 @@
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#c084fc', '#db2777', '#fbbf24'] });
         }
 
-        // Initialize language
-        initLanguage();
+        window.onload = () => {
+            initLanguage();
+            renderBlog();
+            checkCookies();
+        };
     </script>
 </body>
 </html>
